@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
+import { PrismaService } from '@nx-repo/prisma';
+import { TodosRepo } from '@nx-repo/todos/infrastructure';
+import { UsersRepo } from 'libs/users/infrastructure/src';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { TodosController } from './todos.controller';
+import { UsersController } from './users.controller';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [TodosController, UsersController],
+  providers: [PrismaService, TodosRepo, UsersRepo],
 })
 export class AppModule {}
