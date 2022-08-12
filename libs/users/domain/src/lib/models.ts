@@ -10,11 +10,11 @@ export class CreateUserDto {
 
   @IsOptional()
   @IsString()
-  firstName!: string | null;
+  firstName?: string | null;
 
   @IsOptional()
   @IsString()
-  lastName!: string | null;
+  lastName?: string | null;
 }
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { IMapper } from '@nx-repo/core';
+import { IMapper } from '@nx-repo/utils-domain-design';
 import { User } from '@prisma/client';
 
 @Injectable()

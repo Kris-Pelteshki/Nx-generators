@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { IGetManyReturnMany, IRepo } from '@nx-repo/core';
+import { IReturnMany, IRepo } from '@nx-repo/utils-domain-design';
 import { PrismaService } from '@nx-repo/prisma';
 import { CreateTodoDto, UpdateTodoDto } from '@nx-repo/todos/domain';
 import { Todo } from '@prisma/client';
@@ -16,7 +16,7 @@ export class TodosRepo implements IRepo<Todo> {
     });
   }
 
-  getMany(params?: unknown): Promise<IGetManyReturnMany<Todo>> {
+  getMany(params?: unknown): Promise<IReturnMany<Todo>> {
     throw new Error('Method not implemented.');
   }
 

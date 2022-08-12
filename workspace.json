@@ -3,14 +3,15 @@
   "version": 2,
   "projects": {
     "api": "apps/api",
-    "core": "libs/core",
     "prisma": "libs/prisma",
     "templates": "libs/templates",
     "todos-domain": "libs/todos/domain",
     "todos-infrastructure": "libs/todos/infrastructure",
     "ui": "libs/ui",
+    "users-data-access": "libs/users/data-access",
     "users-domain": "libs/users/domain",
     "users-infrastructure": "libs/users/infrastructure",
+    "utils-domain-design": "libs/utils/domain-design",
     "web": "apps/web",
     "web-e2e": "apps/web-e2e"
   }

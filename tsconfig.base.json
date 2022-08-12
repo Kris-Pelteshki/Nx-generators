@@ -15,7 +15,6 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@nx-repo/core": ["libs/core/src/index.ts"],
       "@nx-repo/prisma": ["libs/prisma/src/index.ts"],
       "@nx-repo/templates": ["libs/templates/src/index.ts"],
       "@nx-repo/todos/domain": ["libs/todos/domain/src/index.ts"],
@@ -23,10 +22,12 @@
         "libs/todos/infrastructure/src/index.ts"
       ],
       "@nx-repo/ui": ["libs/ui/src/index.ts"],
+      "@nx-repo/users-data-access": ["libs/users/data-access/src/index.ts"],
       "@nx-repo/users/domain": ["libs/users/domain/src/index.ts"],
       "@nx-repo/users/infrastructure": [
         "libs/users/infrastructure/src/index.ts"
-      ]
+      ],
+      "@nx-repo/utils-domain-design": ["libs/utils/domain-design/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

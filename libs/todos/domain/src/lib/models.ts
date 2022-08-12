@@ -9,7 +9,7 @@ export class CreateTodoDto {
 
   @IsOptional()
   @IsBoolean()
-  done!: boolean;
+  done?: boolean;
 
   @IsString()
   userId!: string;
@@ -21,9 +21,9 @@ export class UpdateTodoDto {
 
   @IsOptional()
   @IsString()
-  title!: string;
+  title?: string;
 
   @IsOptional()
   @IsBoolean()
-  done!: boolean;
+  done?: boolean;
 }

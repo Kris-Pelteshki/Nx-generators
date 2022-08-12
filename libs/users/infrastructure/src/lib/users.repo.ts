@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { IGetManyReturnMany, IRepo } from '@nx-repo/core';
+import { IReturnMany, IRepo } from '@nx-repo/utils-domain-design';
 import { PrismaService } from '@nx-repo/prisma';
 import { CreateUserDto, UpdateUserDto } from '@nx-repo/users/domain';
 import { User } from '@prisma/client';
@@ -14,7 +14,7 @@ export class UsersRepo implements IRepo<User> {
     });
   }
 
-  getMany(params?: unknown): Promise<IGetManyReturnMany<User>> {
+  getMany(params?: unknown): Promise<IReturnMany<User>> {
     throw new Error('Method not implemented.');
   }
 
