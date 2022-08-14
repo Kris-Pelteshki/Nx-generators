@@ -4,11 +4,10 @@ import {
   removeChange,
 } from '@nrwl/workspace/src/utilities/ast-utils';
 import * as ts from 'typescript';
-import type { NormalizedOptions } from '../schema';
 
-export function addExportsToBarrelFile(
+export function addExportsToExportFile(
   tree: Tree,
-  options: NormalizedOptions
+  options: IExportFileOptions
 ): void {
   const indexPath = `${options.projectRoot}/src/index.ts`;
   const indexContent = tree.read(indexPath, 'utf-8') as string;
@@ -27,11 +26,10 @@ export function addExportsToBarrelFile(
     `export * from './lib/${options.projectName}';`
   );
 
-  // export .repo.ts file from index
   sourceFile = addGlobal(
     tree,
     sourceFile,
     indexPath,
-    `export * from './lib/${options.fileName}.repo';`
+    options.contentToAddToFile
   );
 }

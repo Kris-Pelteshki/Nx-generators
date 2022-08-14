@@ -6,13 +6,15 @@ import {
 } from '@nrwl/devkit';
 import { libraryGenerator } from '@nrwl/workspace/generators';
 import {
-  addExportsToBarrelFile,
+  addExportsToExportFile,
   addProject,
-  createFiles,
   deleteFiles,
+  updateTsConfig,
+} from '../../utils/lib';
+import {
+  createFiles,
   normalizeOptions,
   toLibraryGeneratorOptions,
-  updateTsConfig,
 } from './lib';
 import type { LibraryGeneratorOptions } from './schema';
 
@@ -21,12 +23,16 @@ export default async function (
   rawOptions: LibraryGeneratorOptions
 ): Promise<GeneratorCallback> {
   const options = normalizeOptions(tree, rawOptions);
-
   await libraryGenerator(tree, toLibraryGeneratorOptions(options));
 
   deleteFiles(tree, options);
   createFiles(tree, options);
-  addExportsToBarrelFile(tree, options);
+
+  addExportsToExportFile(tree, {
+    ...options,
+    contentToAddToFile: `export * from './lib/${options.fileName}.repo';`,
+  });
+
   updateTsConfig(tree, options);
   addProject(tree, options);
 

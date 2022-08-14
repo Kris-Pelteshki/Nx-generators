@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { IReturnMany, IRepo } from '@nx-repo/utils-domain-design';
-import { PrismaService } from '@nx-repo/prisma';
-import { Create<%= className %>Dto, Update<%= className %>Dto } from '@nx-repo/<%= prismaClientProperty %>/domain';
+import { IReturnMany, IRepo } from '@<%= workspace %>/utils-domain-design';
+import { PrismaService } from '@<%= workspace %>/prisma';
+import { Create<%= className %>Dto, Update<%= className %>Dto } from '@<%= workspace %>/<%= prismaClientProperty %>/domain';
 import { <%= prismaModel %> } from '@prisma/client';
 
 @Injectable()

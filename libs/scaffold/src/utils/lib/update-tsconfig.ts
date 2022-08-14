@@ -1,8 +1,10 @@
 import type { Tree } from '@nrwl/devkit';
 import { readProjectConfiguration, updateJson } from '@nrwl/devkit';
-import type { NormalizedOptions } from '../schema';
 
-export function updateTsConfig(tree: Tree, options: NormalizedOptions): void {
+export function updateTsConfig(
+  tree: Tree,
+  options: IUpdateTsConfigOptions
+): void {
   const project = readProjectConfiguration(tree, options.projectName);
 
   return updateJson(tree, `${project.root}/tsconfig.lib.json`, (json) => {

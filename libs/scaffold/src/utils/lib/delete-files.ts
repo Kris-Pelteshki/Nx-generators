@@ -1,8 +1,10 @@
 import type { Tree } from '@nrwl/devkit';
 import { joinPathFragments } from '@nrwl/devkit';
-import type { NormalizedOptions } from '../schema';
 
-export function deleteFiles(tree: Tree, options: NormalizedOptions): void {
+export function deleteFiles(
+  tree: Tree,
+  options: BaseLibNormalizedOptions
+): void {
   tree.delete(
     joinPathFragments(
       options.projectRoot,

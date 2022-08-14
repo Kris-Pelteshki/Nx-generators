@@ -18,7 +18,6 @@
       "@nx-repo/prisma": ["libs/prisma/src/index.ts"],
       "@nx-repo/scaffold": ["libs/scaffold/src/index.ts"],
       "@nx-repo/templates": ["libs/templates/src/index.ts"],
-      "@nx-repo/test/infrastructure": ["libs/test/infrastructure/src/index.ts"],
       "@nx-repo/todos/domain": ["libs/todos/domain/src/index.ts"],
       "@nx-repo/todos/infrastructure": [
         "libs/todos/infrastructure/src/index.ts"

@@ -4,9 +4,8 @@ import {
   readProjectConfiguration,
   updateProjectConfiguration,
 } from '@nrwl/devkit';
-import type { NormalizedOptions } from '../schema';
 
-export function addProject(tree: Tree, options: NormalizedOptions): void {
+export function addProject(tree: Tree, options: IAddProjectOptions): void {
   if (!options.publishable && !options.buildable) {
     return;
   }
