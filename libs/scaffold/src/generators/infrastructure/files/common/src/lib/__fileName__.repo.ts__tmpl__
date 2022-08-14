@@ -1,0 +1,42 @@
+import { Injectable } from '@nestjs/common';
+import { IReturnMany, IRepo } from '@nx-repo/utils-domain-design';
+import { PrismaService } from '@nx-repo/prisma';
+import { Create<%= className %>Dto, Update<%= className %>Dto } from '@nx-repo/<%= prismaClientProperty %>/domain';
+import { <%= prismaModel %> } from '@prisma/client';
+
+@Injectable()
+export class <%= className %>Repo implements IRepo<<%= prismaModel %>> {
+  constructor(private readonly prisma: PrismaService) {}
+
+  getOne(id: string): Promise<<%= prismaModel %> | null> {
+    return this.prisma.<%= prismaClientProperty %>.findUnique({
+      where: { id },
+    });
+  }
+
+  getMany(params?: unknown): Promise<IReturnMany<<%= prismaModel %>>> {
+    throw new Error('Method not implemented.');
+  }
+
+  create(data: Create<%= className %>Dto): Promise<<%= prismaModel %>> {
+    return this.prisma.<%= prismaClientProperty %>.create({
+      data,
+    });
+  }
+
+  update(data: Update<%= className %>Dto): Promise<<%= prismaModel %>> {
+    return this.prisma.<%= prismaClientProperty %>.update({
+      data,
+      where: {
+        id: data.id,
+      },
+    });
+  }
+
+  delete(id: string): Promise<<%= prismaModel %>> {
+    return this.prisma.<%= prismaClientProperty %>.delete({
+      where: { id },
+    });
+  }
+}
+

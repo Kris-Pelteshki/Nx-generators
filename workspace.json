@@ -4,7 +4,10 @@
   "projects": {
     "api": "apps/api",
     "prisma": "libs/prisma",
+    "scaffold": "libs/scaffold",
+    "scaffold-e2e": "apps/scaffold-e2e",
     "templates": "libs/templates",
+    "test-infrastructure": "libs/test/infrastructure",
     "todos-domain": "libs/todos/domain",
     "todos-infrastructure": "libs/todos/infrastructure",
     "ui": "libs/ui",
