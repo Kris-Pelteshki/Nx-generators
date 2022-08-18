@@ -17,6 +17,11 @@
       "factory": "./src/generators/controller/generator",
       "schema": "./src/generators/controller/schema.json",
       "description": "controller generator"
+    },
+    "repository": {
+      "factory": "./src/generators/repository/generator",
+      "schema": "./src/generators/repository/schema.json",
+      "description": "Creates a repository using the prisma client"
     }
   }
 }

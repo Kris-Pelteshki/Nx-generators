@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "repository",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "prismaModel": {
+      "type": "string",
+      "description": "The name of the prisma model in the schema.prisma file.",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      }
+    },
+    "project": {
+      "type": "string",
+      "description": "The Nest project to target.",
+      "$default": {
+        "$source": "projectName"
+      },
+      "alias": "p",
+      "x-prompt": "What project would you like to target?"
+    },
+    "directory": {
+      "type": "string",
+      "description": "Directory where the generated files are placed.",
+      "aliases": ["dir", "path"]
+    },
+    "unitTestRunner": {
+      "description": "Test runner to use for unit tests.",
+      "type": "string",
+      "enum": ["jest", "none"],
+      "default": "jest"
+    },
+    "skipFormat": {
+      "type": "boolean",
+      "description": "Skip formatting files.",
+      "default": false
+    }
+  },
+  "additionalProperties": false,
+  "required": ["prismaModel", "project"]
+}
