@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
-  "$id": "ApiClient",
+  "$id": "Scaffold-Controller",
   "title": "",
   "type": "object",
   "properties": {
@@ -15,7 +15,7 @@
     },
     "project": {
       "type": "string",
-      "description": "The Nest project to target.",
+      "description": "The project where the generated files are placed.",
       "$default": {
         "$source": "projectName"
       },
@@ -24,7 +24,7 @@
     },
     "directory": {
       "type": "string",
-      "description": "Directory where the generated files are placed.",
+      "description": "The directory where the generated files are placed.",
       "aliases": ["dir", "path"]
     },
     "skipFormat": {

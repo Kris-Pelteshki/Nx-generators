@@ -10,28 +10,35 @@ import {
 import { addGlobal } from '@nrwl/workspace/src/utilities/ast-utils';
 import * as path from 'path';
 import * as ts from 'typescript';
-import { ApiClientGeneratorSchema } from './schema';
+import { ControllerGeneratorSchema } from './schema';
 
-interface NormalizedSchema extends ApiClientGeneratorSchema {
+interface NormalizedSchema extends ControllerGeneratorSchema {
+  workspace: string;
   projectRoot: string;
   sourceRoot: string;
   folderRoot: string;
-  workspace: string;
   fileName: string;
 }
 
 function normalizeOptions(
   tree: Tree,
-  options: ApiClientGeneratorSchema
+  options: ControllerGeneratorSchema
 ): NormalizedSchema {
   const { npmScope } = getWorkspaceLayout(tree);
   const { sourceRoot, root: projectRoot } = readProjectConfiguration(
     tree,
     options.project
   );
+
+  const isLib = tree
+    .children(`${projectRoot}/src`)
+    ?.some((child) => child === 'lib');
+
+  const prefix = isLib ? 'lib' : 'app';
+
   const folderRoot = options.directory
-    ? `${sourceRoot}/lib/${options.directory}`
-    : `${sourceRoot}/lib`;
+    ? `${sourceRoot}/${prefix}/${options.directory}`
+    : `${sourceRoot}/${prefix}`;
 
   return {
     ...options,
@@ -44,6 +51,14 @@ function normalizeOptions(
 }
 
 function updateBarrel(tree: Tree, options: NormalizedSchema) {
+  const isLib = tree
+    .children(`${options.projectRoot}/src`)
+    ?.some((child) => child === 'lib');
+
+  if (!isLib) {
+    return;
+  }
+
   const indexPath = `${options.projectRoot}/src/index.ts`;
   const indexContent = tree.read(indexPath, 'utf-8');
 
@@ -55,8 +70,8 @@ function updateBarrel(tree: Tree, options: NormalizedSchema) {
   );
 
   const filePath = options.directory
-    ? `./lib/${options.directory}/${options.fileName}.client`
-    : `./lib/${options.fileName}.client`;
+    ? `./lib/${options.directory}/${options.fileName}.controller`
+    : `./lib/${options.fileName}.controller`;
 
   const exportString = `export * from '${filePath}';`;
 
@@ -78,7 +93,7 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
   );
 }
 
-export default async function (tree: Tree, options: ApiClientGeneratorSchema) {
+export default async function (tree: Tree, options: ControllerGeneratorSchema) {
   const normalizedOptions = normalizeOptions(tree, options);
 
   addFiles(tree, normalizedOptions);

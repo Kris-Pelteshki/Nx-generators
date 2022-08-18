@@ -12,6 +12,11 @@
       "factory": "./src/generators/api-client/generator",
       "schema": "./src/generators/api-client/schema.json",
       "description": "Create an api client to be consumed by a front-end"
+    },
+    "controller": {
+      "factory": "./src/generators/controller/generator",
+      "schema": "./src/generators/controller/schema.json",
+      "description": "controller generator"
     }
   }
 }

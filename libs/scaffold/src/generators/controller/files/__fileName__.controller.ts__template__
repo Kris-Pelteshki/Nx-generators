@@ -1,0 +1,36 @@
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
+import { Create<%= className %>Dto, Update<%= className %>Dto } from '@<%= workspace %>/<%= propertyName %>/domain';
+import { <%= className %>Repo } from '@<%= workspace %>/<%= propertyName %>/infrastructure';
+
+@Controller('<%= fileName %>')
+export class <%= className %>Controller {
+  constructor(private readonly <%= propertyName %>Repo: <%= className %>Repo) {}
+
+  @Get(':id')
+  getOne(@Param('id') id: string) {
+    return this.<%= propertyName %>Repo.getOne(id);
+  }
+
+  @Post()
+  create(@Body() data: Create<%= className %>Dto) {
+    return this.<%= propertyName %>Repo.create(data);
+  }
+
+  @Patch(':id')
+  update(@Body() data: Update<%= className %>Dto) {
+    return this.<%= propertyName %>Repo.update(data);
+  }
+
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.<%= propertyName %>Repo.delete(id);
+  }
+}
