@@ -1,11 +1,22 @@
 import styles from './index.module.scss';
 
 export function Index() {
-  /*
-   * Replace the elements below with your own.
-   *
-   * Note: The corresponding styles are in the ./index.scss file.
-   */
+  // useEffect(() => {
+  //   (async function () {
+  //     const res = await todoClient.create({
+  //       userId: '4f6b6cf2-591b-4477-a58b-17adfdc01c83',
+  //       title: 'my Todo',
+  //     });
+
+  //     console.log(res);
+
+  //     // await todoClient.update({
+  //     //   id: '89673e75-0dca-4ef5-bd2e-cff2c6213b0c',
+  //     //   done: true,
+  //     // });
+  //   })();
+  // }, []);
+
   return (
     <div className={styles.page}>
       <div className="wrapper">

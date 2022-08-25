@@ -99,7 +99,7 @@ export default async function (tree: Tree, options: ControllerGeneratorSchema) {
   addFiles(tree, normalizedOptions);
   updateBarrel(tree, normalizedOptions);
 
-  if (options.skipFormat) {
+  if (!options.skipFormat) {
     await formatFiles(tree);
   }
 }

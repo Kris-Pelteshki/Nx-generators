@@ -70,9 +70,12 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     offsetFromRoot: offsetFromRoot(options.projectRoot),
     template: '',
   };
+
+  const filePath = options.useAxios ? 'files/axios' : 'files/fetch';
+
   generateFiles(
     tree,
-    path.join(__dirname, 'files'),
+    path.join(__dirname, filePath),
     options.folderRoot,
     templateOptions
   );
@@ -84,7 +87,7 @@ export default async function (tree: Tree, options: ApiClientGeneratorSchema) {
   addFiles(tree, normalizedOptions);
   updateBarrel(tree, normalizedOptions);
 
-  if (options.skipFormat) {
+  if (!options.skipFormat) {
     await formatFiles(tree);
   }
 }

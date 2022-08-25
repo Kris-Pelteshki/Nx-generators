@@ -1,0 +1,57 @@
+import { IReturnMany } from '@<%= workspace %>/utils-domain-design';
+import type { Create<%= className %>Dto, Update<%= className %>Dto } from '@<%= workspace %>/<%= propertyName %>/domain';
+import { <%= prismaModel %> } from '@prisma/client';
+
+interface IApiClient<T> {
+  getOne(id: string): Promise<T>;
+  getMany(params?: unknown): Promise<IReturnMany<T>>;
+  create(data: Create<%= className %>Dto): Promise<T>;
+  update(data: Update<%= className %>Dto): Promise<T>;
+  delete(id: string): Promise<T>;
+}
+
+type ApiClient = IApiClient<<%= prismaModel %>>;
+
+const baseURL = 'http://localhost:3333/api/<%= fileName %>';
+
+class <%= className %>Client implements ApiClient {
+  async getOne(id: string): Promise<<%= prismaModel %>> {
+    const res = await fetch(`${baseURL}/${id}`);
+    return res.json();
+  }
+
+  async getMany(params?: unknown): Promise<IReturnMany<<%= prismaModel %>>> {
+    throw new Error('Method not implemented.');
+  }
+
+  async create(data: Create<%= className %>Dto): Promise<<%= prismaModel %>> {
+    const res = await fetch(`${baseURL}`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return res.json();
+  }
+
+  async update(data: Update<%= className %>Dto): Promise<<%= prismaModel %>> {
+    const res = await fetch(`${baseURL}/${data.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return res.json();
+  }
+
+  async delete(id: string): Promise<<%= prismaModel %>> {
+    const res = await fetch(`${baseURL}/${id}`, {
+      method: 'DELETE',
+    });
+    return res.json();
+  }
+}
+
+export const <%= propertyName %>Client = new <%= className %>Client();

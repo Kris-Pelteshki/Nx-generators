@@ -1,0 +1,42 @@
+import axios, { type AxiosResponse } from 'axios';
+import { IReturnMany } from '@<%= workspace %>/utils-domain-design';
+import type { Create<%= className %>Dto, Update<%= className %>Dto } from '@<%= workspace %>/<%= propertyName %>/domain';
+import { <%= prismaModel %> } from '@prisma/client';
+
+interface IApiClient<T> {
+  getOne(id: string): Promise<AxiosResponse<T>>;
+  getMany(params?: unknown): Promise<AxiosResponse<IReturnMany<T>>>;
+  create(data: Create<%= className %>Dto): Promise<AxiosResponse<T>>;
+  update(data: Update<%= className %>Dto): Promise<AxiosResponse<T>>;
+  delete(id: string): Promise<AxiosResponse<T>>;
+}
+
+type ApiClient = IApiClient<<%= prismaModel %>>;
+
+const instance = axios.create({
+  baseURL: 'http://localhost:3333/api/<%= fileName %>',
+});
+
+class <%= className %>Client implements ApiClient {
+  getOne(id: string): Promise<AxiosResponse<<%= prismaModel %>>> {
+    return instance.get(`/${id}`);
+  }
+
+  getMany(params?: unknown): Promise<AxiosResponse<IReturnMany<<%= prismaModel %>>>> {
+    throw new Error('Method not implemented.');
+  }
+
+  create(data: Create<%= className %>Dto): Promise<AxiosResponse<<%= prismaModel %>>> {
+    return instance.post(`/`, data);
+  }
+
+  update(data: Update<%= className %>Dto): Promise<AxiosResponse<<%= prismaModel %>>> {
+    return instance.patch(`/${data.id}`, data);
+  }
+
+  delete(id: string): Promise<AxiosResponse<<%= prismaModel %>>> {
+    return instance.delete(`/${id}`);
+  }
+}
+
+export const <%= propertyName %>Client = new <%= className %>Client();

@@ -1,20 +1,20 @@
 {
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/todos/domain/src",
+  "sourceRoot": "libs/todo/domain/src",
   "projectType": "library",
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/todos/domain/**/*.ts"]
+        "lintFilePatterns": ["libs/todo/domain/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/todos/domain"],
+      "outputs": ["coverage/libs/todo/domain"],
       "options": {
-        "jestConfig": "libs/todos/domain/jest.config.ts",
+        "jestConfig": "libs/todo/domain/jest.config.ts",
         "passWithNoTests": true
       }
     }

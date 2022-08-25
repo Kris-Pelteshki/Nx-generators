@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'todos-domain',
+  displayName: 'todo-infrastructure',
   preset: '../../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -12,5 +12,5 @@ export default {
     '^.+\\.[tj]s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../../coverage/libs/todos/domain',
+  coverageDirectory: '../../../coverage/libs/todo/infrastructure',
 };

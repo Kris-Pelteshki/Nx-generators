@@ -5,14 +5,14 @@ export type IUpdateTodoDto = UpdateTodoDto;
 
 export class CreateTodoDto {
   @IsString()
+  userId!: string;
+
+  @IsString()
   title!: string;
 
   @IsOptional()
   @IsBoolean()
   done?: boolean;
-
-  @IsString()
-  userId!: string;
 }
 
 export class UpdateTodoDto {
