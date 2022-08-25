@@ -9,7 +9,6 @@
     "templates": "libs/templates",
     "todo-domain": "libs/todo/domain",
     "todo-infrastructure": "libs/todo/infrastructure",
-    "ui": "libs/ui",
     "users-data-access": "libs/users/data-access",
     "users-domain": "libs/users/domain",
     "users-infrastructure": "libs/users/infrastructure",

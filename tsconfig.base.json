@@ -20,7 +20,6 @@
       "@nx-repo/templates": ["libs/templates/src/index.ts"],
       "@nx-repo/todo/domain": ["libs/todo/domain/src/index.ts"],
       "@nx-repo/todo/infrastructure": ["libs/todo/infrastructure/src/index.ts"],
-      "@nx-repo/ui": ["libs/ui/src/index.ts"],
       "@nx-repo/users-data-access": ["libs/users/data-access/src/index.ts"],
       "@nx-repo/users/domain": ["libs/users/domain/src/index.ts"],
       "@nx-repo/users/infrastructure": [
