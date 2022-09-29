@@ -1,2 +1,2 @@
-export * from './lib/models';
-export * from './lib/repo';
+export * from './lib/todo/models';
+export * from './lib/todo/repo';

@@ -12,7 +12,7 @@ export function baseNormalizeOptions<IOptions extends BaseGenerateLibSchema>(
     ? `${names(options.directory).fileName}/${name}`
     : name;
 
-  const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
+  // const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
   const projectRoot = joinPathFragments(libsDir, projectDirectory);
 
   const fileName = names(options.name).propertyName;
@@ -30,7 +30,7 @@ export function baseNormalizeOptions<IOptions extends BaseGenerateLibSchema>(
     parsedTags,
     prefix: npmScope,
     projectDirectory,
-    projectName,
+    projectName: projectDirectory,
     projectRoot,
     target: options.target ?? 'es6',
     testEnvironment: options.testEnvironment ?? 'node',

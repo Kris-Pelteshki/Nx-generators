@@ -22,6 +22,11 @@
       "factory": "./src/generators/repository/generator",
       "schema": "./src/generators/repository/schema.json",
       "description": "Creates a repository using the prisma client"
+    },
+    "domain": {
+      "factory": "./src/generators/domain/generator",
+      "schema": "./src/generators/domain/schema.json",
+      "description": "Creates a domain library template."
     }
   }
 }

@@ -1,5 +1,7 @@
+import { Todo } from '@prisma/client';
 import { IsString, IsOptional, IsBoolean } from 'class-validator';
 
+export type ITodo = Todo;
 export type ICreateTodoDto = CreateTodoDto;
 export type IUpdateTodoDto = UpdateTodoDto;
 

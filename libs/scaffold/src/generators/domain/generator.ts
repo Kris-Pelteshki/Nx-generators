@@ -17,28 +17,26 @@ import {
   getFolderPath,
   getExportStatement,
 } from '../../utils/paths';
-import { RepositoryGeneratorSchema } from './schema';
+import { DomainGeneratorSchema } from './schema';
 
-interface NormalizedSchema extends RepositoryGeneratorSchema {
+interface NormalizedSchema extends DomainGeneratorSchema {
   projectRoot: string;
   sourceRoot: string;
   folderRoot: string;
   workspace: string;
   fileName: string;
   prismaClientProperty: string;
-  domainImportPath: string;
 }
 
 function normalizeOptions(
   tree: Tree,
-  options: RepositoryGeneratorSchema
+  options: DomainGeneratorSchema
 ): NormalizedSchema {
   const { npmScope } = getWorkspaceLayout(tree);
   const { sourceRoot, root: projectRoot } = readProjectConfiguration(
     tree,
     options.project
   );
-  const domainImportPath = getTsPath(tree, options.domainProject);
   const folderRoot = getFolderPath(sourceRoot, options.directory);
 
   const prismaClientProperty = names(options.prismaModel).propertyName;
@@ -52,10 +50,10 @@ function normalizeOptions(
     folderRoot,
     fileName,
     prismaClientProperty,
-    domainImportPath,
   };
 }
 
+// TODO: update exports
 function updateBarrel(tree: Tree, options: NormalizedSchema) {
   const indexPath = `${options.projectRoot}/src/index.ts`;
   const indexContent = tree.read(indexPath, 'utf-8');
@@ -67,10 +65,20 @@ function updateBarrel(tree: Tree, options: NormalizedSchema) {
     true
   );
 
-  const exportString = getExportStatement(
-    `${options.fileName}.repo`,
+  let exportString = getExportStatement(
+    `${options.fileName}.models`,
     options.directory
   );
+
+  if (options.addRepoInterface) {
+    exportString +=
+      '\n' + getExportStatement(`${options.fileName}.repo`, options.directory);
+  }
+
+  if (options.addApiInterface) {
+    exportString +=
+      '\n' + getExportStatement(`${options.fileName}.api`, options.directory);
+  }
 
   addGlobal(tree, sourceFile, indexPath, exportString);
 }
@@ -81,24 +89,28 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     ...names(options.prismaModel),
     ...interfaceNames(options.prismaModel),
     offsetFromRoot: offsetFromRoot(options.projectRoot),
-    tmpl: '',
+    template: '',
   };
 
-  generateFiles(
-    tree,
-    path.join(__dirname, 'files'),
-    options.folderRoot,
-    templateOptions
-  );
-
-  if (options.unitTestRunner === 'none') {
-    tree.delete(
-      joinPathFragments(options.folderRoot, `${options.fileName}.repo.spec.ts`)
+  const genFiles = (pathTo: string) =>
+    generateFiles(
+      tree,
+      path.join(__dirname, pathTo),
+      options.folderRoot,
+      templateOptions
     );
+
+  genFiles('files/common');
+
+  if (options.addRepoInterface) {
+    genFiles('files/repo');
+  }
+  if (options.addApiInterface) {
+    genFiles('files/api');
   }
 }
 
-export default async function (tree: Tree, options: RepositoryGeneratorSchema) {
+export default async function (tree: Tree, options: DomainGeneratorSchema) {
   const normalizedOptions = normalizeOptions(tree, options);
 
   addFiles(tree, normalizedOptions);

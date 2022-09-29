@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
-  "$id": "repository",
+  "$id": "Domain-files",
   "title": "",
   "type": "object",
   "properties": {
@@ -22,25 +22,20 @@
       "alias": "p",
       "x-prompt": "What project would you like to target?"
     },
-    "domainProject": {
-      "type": "string",
-      "description": "The domain project to import interfaces from (e.g. CreateDto, UpdateDto, etc.).",
-      "$default": {
-        "$source": "projectName"
-      },
-      "alias": "p",
-      "x-prompt": "From which domain project to import interfaces from?"
-    },
     "directory": {
       "type": "string",
-      "description": "Directory where the generated files are placed.",
-      "aliases": ["dir", "path"]
+      "description": "A directory where the files are placed.",
+      "alias": "d"
     },
-    "unitTestRunner": {
-      "description": "Test runner to use for unit tests.",
-      "type": "string",
-      "enum": ["jest", "none"],
-      "default": "jest"
+    "addRepoInterface": {
+      "type": "boolean",
+      "description": "Add a repository interface that extends IRepo<>.",
+      "default": true
+    },
+    "addApiInterface": {
+      "type": "boolean",
+      "description": "Add an API interface that extends IAPI<>. To be used as the interface for the controller and the front-end api client.",
+      "default": true
     },
     "skipFormat": {
       "type": "boolean",
@@ -49,5 +44,5 @@
     }
   },
   "additionalProperties": false,
-  "required": ["prismaModel", "project", "domainProject"]
+  "required": ["prismaModel", "project"]
 }
