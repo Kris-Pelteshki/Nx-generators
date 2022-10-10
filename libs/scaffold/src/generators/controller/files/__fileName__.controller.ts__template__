@@ -10,7 +10,7 @@ import {
 import { Create<%= className %>Dto, Update<%= className %>Dto } from '@<%= workspace %>/<%= propertyName %>/domain';
 import { <%= className %>Repo } from '@<%= workspace %>/<%= propertyName %>/infrastructure';
 
-@Controller('<%= fileName %>')
+@Controller('<%= fileName %>s')
 export class <%= className %>Controller {
   constructor(private readonly <%= propertyName %>Repo: <%= className %>Repo) {}
 

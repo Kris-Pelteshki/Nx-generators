@@ -2,21 +2,18 @@ import {
   formatFiles,
   generateFiles,
   getWorkspaceLayout,
-  joinPathFragments,
   names,
   offsetFromRoot,
   readProjectConfiguration,
   Tree,
 } from '@nrwl/devkit';
-import { addGlobal } from '@nrwl/workspace/src/utilities/ast-utils';
 import * as path from 'path';
-import * as ts from 'typescript';
-import { interfaceNames } from '../../utils/formats';
 import {
-  getTsPath,
+  BarrelUpdater,
+  ExportStatementBuilder,
   getFolderPath,
-  getExportStatement,
-} from '../../utils/paths';
+  interfaceNames,
+} from '../../utils';
 import { DomainGeneratorSchema } from './schema';
 
 interface NormalizedSchema extends DomainGeneratorSchema {
@@ -53,34 +50,23 @@ function normalizeOptions(
   };
 }
 
-// TODO: update exports
 function updateBarrel(tree: Tree, options: NormalizedSchema) {
-  const indexPath = `${options.projectRoot}/src/index.ts`;
-  const indexContent = tree.read(indexPath, 'utf-8');
-
-  let sourceFile = ts.createSourceFile(
-    indexPath,
-    indexContent,
-    ts.ScriptTarget.Latest,
-    true
-  );
-
-  let exportString = getExportStatement(
-    `${options.fileName}.models`,
-    options.directory
-  );
+  const exports = new ExportStatementBuilder()
+    .directory(options.directory)
+    .fileNames([`${options.fileName}.models`]);
 
   if (options.addRepoInterface) {
-    exportString +=
-      '\n' + getExportStatement(`${options.fileName}.repo`, options.directory);
+    exports.addFile(`${options.fileName}.repo`);
   }
 
   if (options.addApiInterface) {
-    exportString +=
-      '\n' + getExportStatement(`${options.fileName}.api`, options.directory);
+    exports.addFile(`${options.fileName}.api`);
   }
 
-  addGlobal(tree, sourceFile, indexPath, exportString);
+  new BarrelUpdater(tree)
+    .barrelPath(`${options.projectRoot}/src/index.ts`)
+    .contentToAdd(exports.build())
+    .update();
 }
 
 function addFiles(tree: Tree, options: NormalizedSchema) {

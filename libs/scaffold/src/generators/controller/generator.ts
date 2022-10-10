@@ -7,9 +7,8 @@ import {
   readProjectConfiguration,
   Tree,
 } from '@nrwl/devkit';
-import { addGlobal } from '@nrwl/workspace/src/utilities/ast-utils';
 import * as path from 'path';
-import * as ts from 'typescript';
+import { BarrelUpdater, ExportStatementBuilder } from '../../utils';
 import { ControllerGeneratorSchema } from './schema';
 
 interface NormalizedSchema extends ControllerGeneratorSchema {
@@ -59,23 +58,14 @@ function updateBarrel(tree: Tree, options: NormalizedSchema) {
     return;
   }
 
-  const indexPath = `${options.projectRoot}/src/index.ts`;
-  const indexContent = tree.read(indexPath, 'utf-8');
+  const exports = new ExportStatementBuilder()
+    .directory(options.directory)
+    .fileNames([`${options.fileName}.controller`]);
 
-  let sourceFile = ts.createSourceFile(
-    indexPath,
-    indexContent,
-    ts.ScriptTarget.Latest,
-    true
-  );
-
-  const filePath = options.directory
-    ? `./lib/${options.directory}/${options.fileName}.controller`
-    : `./lib/${options.fileName}.controller`;
-
-  const exportString = `export * from '${filePath}';`;
-
-  addGlobal(tree, sourceFile, indexPath, exportString);
+  new BarrelUpdater(tree)
+    .barrelPath(`${options.projectRoot}/src/index.ts`)
+    .contentToAdd(exports.build())
+    .update();
 }
 
 function addFiles(tree: Tree, options: NormalizedSchema) {

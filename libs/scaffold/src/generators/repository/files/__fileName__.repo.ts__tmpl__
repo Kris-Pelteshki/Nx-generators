@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { IReturnMany, IRepo } from '@<%= workspace %>/utils-domain-design';
+import { IReturnMany } from '@<%= workspace %>/utils-domain-design';
 import { PrismaService } from '@<%= workspace %>/prisma';
 import { <%= interfaceName %>, <%= createInterface %>, <%= updateInterface %>, <%= repoInterface %> } from '<%= domainImportPath %>';
 

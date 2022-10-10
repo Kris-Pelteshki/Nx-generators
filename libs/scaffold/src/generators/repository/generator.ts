@@ -8,15 +8,13 @@ import {
   readProjectConfiguration,
   Tree,
 } from '@nrwl/devkit';
-import { addGlobal } from '@nrwl/workspace/src/utilities/ast-utils';
 import * as path from 'path';
-import * as ts from 'typescript';
-import { interfaceNames } from '../../utils/formats';
 import {
-  getTsPath,
-  getFolderPath,
-  getExportStatement,
-} from '../../utils/paths';
+  BarrelUpdater,
+  ExportStatementBuilder,
+  interfaceNames,
+} from '../../utils';
+import { getTsPath, getFolderPath } from '../../utils/paths';
 import { RepositoryGeneratorSchema } from './schema';
 
 interface NormalizedSchema extends RepositoryGeneratorSchema {
@@ -57,22 +55,14 @@ function normalizeOptions(
 }
 
 function updateBarrel(tree: Tree, options: NormalizedSchema) {
-  const indexPath = `${options.projectRoot}/src/index.ts`;
-  const indexContent = tree.read(indexPath, 'utf-8');
+  const exports = new ExportStatementBuilder()
+    .directory(options.directory)
+    .fileNames([`${options.fileName}.repo`]);
 
-  let sourceFile = ts.createSourceFile(
-    indexPath,
-    indexContent,
-    ts.ScriptTarget.Latest,
-    true
-  );
-
-  const exportString = getExportStatement(
-    `${options.fileName}.repo`,
-    options.directory
-  );
-
-  addGlobal(tree, sourceFile, indexPath, exportString);
+  new BarrelUpdater(tree)
+    .barrelPath(`${options.projectRoot}/src/index.ts`)
+    .contentToAdd(exports.build())
+    .update();
 }
 
 function addFiles(tree: Tree, options: NormalizedSchema) {

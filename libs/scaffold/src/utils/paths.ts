@@ -29,15 +29,24 @@ export function getFolderPath(
 
 export function getFilePathRelativeToProjectRoot(
   fileName: string,
-  directoryPath?: string
+  directoryPath?: string,
+  pathPrefix = './lib/'
 ) {
   return directoryPath
-    ? `./lib/${directoryPath}/${fileName}`
-    : `./lib/${fileName}`;
+    ? `${pathPrefix}${directoryPath}/${fileName}`
+    : `${pathPrefix}${fileName}`;
 }
 
-export function getExportStatement(fileName: string, directoryPath?: string) {
-  const filePath = getFilePathRelativeToProjectRoot(fileName, directoryPath);
+export function getExportStatement(
+  fileName: string,
+  directoryPath?: string,
+  pathPrefix?: string
+) {
+  const filePath = getFilePathRelativeToProjectRoot(
+    fileName,
+    directoryPath,
+    pathPrefix
+  );
 
   return `export * from '${filePath}';`;
 }
