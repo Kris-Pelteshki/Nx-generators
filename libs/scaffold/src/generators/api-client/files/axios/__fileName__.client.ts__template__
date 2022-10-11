@@ -1,40 +1,33 @@
-import axios, { type AxiosResponse } from 'axios';
-import { IReturnMany } from '@<%= workspace %>/utils-domain-design';
-import type { Create<%= className %>Dto, Update<%= className %>Dto } from '@<%= workspace %>/<%= propertyName %>/domain';
-import { <%= prismaModel %> } from '@prisma/client';
+import axios, { AxiosPromise } from 'axios';
+import { IReturnMany, AxiosApiClient } from '@<%= workspace %>/utils-domain-design';
+import { <%= interfaceName %>, <%= createInterface %>, <%= updateInterface %>, <%= apiInterface %> } from '<%= domainImportPath %>';
 
-interface IApiClient<T> {
-  getOne(id: string): Promise<AxiosResponse<T>>;
-  getMany(params?: unknown): Promise<AxiosResponse<IReturnMany<T>>>;
-  create(data: Create<%= className %>Dto): Promise<AxiosResponse<T>>;
-  update(data: Update<%= className %>Dto): Promise<AxiosResponse<T>>;
-  delete(id: string): Promise<AxiosResponse<T>>;
-}
-
-type ApiClient = IApiClient<<%= prismaModel %>>;
+// =================================================
+// TODO: Update the baseURL for the API
+// =================================================
 
 const instance = axios.create({
   baseURL: 'http://localhost:3333/api/<%= fileName %>',
 });
 
-class <%= className %>Client implements ApiClient {
-  getOne(id: string): Promise<AxiosResponse<<%= prismaModel %>>> {
+class <%= className %>Client implements AxiosApiClient<<%= apiInterface %>> {
+  getOne(id: string): AxiosPromise<<%= interfaceName %>> {
     return instance.get(`/${id}`);
   }
 
-  getMany(params?: unknown): Promise<AxiosResponse<IReturnMany<<%= prismaModel %>>>> {
+  getMany(params?: unknown): AxiosPromise<IReturnMany<<%= interfaceName %>>> {
     throw new Error('Method not implemented.');
   }
 
-  create(data: Create<%= className %>Dto): Promise<AxiosResponse<<%= prismaModel %>>> {
+  create(data: <%= createInterface %>): AxiosPromise<<%= interfaceName %>> {
     return instance.post(`/`, data);
   }
 
-  update(data: Update<%= className %>Dto): Promise<AxiosResponse<<%= prismaModel %>>> {
+  update(data: <%= updateInterface %>): AxiosPromise<<%= interfaceName %>> {
     return instance.patch(`/${data.id}`, data);
   }
 
-  delete(id: string): Promise<AxiosResponse<<%= prismaModel %>>> {
+  delete(id: string): AxiosPromise<<%= interfaceName %>> {
     return instance.delete(`/${id}`);
   }
 }

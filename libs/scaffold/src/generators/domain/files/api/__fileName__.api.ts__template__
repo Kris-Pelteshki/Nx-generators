@@ -1,7 +1,7 @@
 import { IReturnMany } from '@<%= workspace %>/utils-domain-design';
 import { <%= interfaceName %>, <%= createInterface %>, <%= updateInterface %> } from './<%= fileName %>.models';
 
-export interface <%= apiInterface %> {
+export type <%= apiInterface %> = {
   getOne(id: string): Promise<<%= interfaceName %>>;
   getMany(params?: unknown): Promise<IReturnMany<<%= interfaceName %>>>;
   create(data: <%= createInterface %>): Promise<<%= interfaceName %>>;

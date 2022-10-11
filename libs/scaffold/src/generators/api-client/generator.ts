@@ -7,16 +7,21 @@ import {
   readProjectConfiguration,
   Tree,
 } from '@nrwl/devkit';
-import { addGlobal } from '@nrwl/workspace/src/utilities/ast-utils';
 import * as path from 'path';
-import * as ts from 'typescript';
-import { BarrelUpdater, ExportStatementBuilder } from '../../utils';
+import {
+  BarrelUpdater,
+  ExportStatementBuilder,
+  getFolderPath,
+  getTsPath,
+  interfaceNames,
+} from '../../utils';
 import { ApiClientGeneratorSchema } from './schema';
 
 interface NormalizedSchema extends ApiClientGeneratorSchema {
   projectRoot: string;
   sourceRoot: string;
   folderRoot: string;
+  domainImportPath: string;
   workspace: string;
   fileName: string;
 }
@@ -30,9 +35,8 @@ function normalizeOptions(
     tree,
     options.project
   );
-  const folderRoot = options.directory
-    ? `${sourceRoot}/lib/${options.directory}`
-    : `${sourceRoot}/lib`;
+  const domainImportPath = getTsPath(tree, options.domainProject);
+  const folderRoot = getFolderPath(sourceRoot, options.directory);
 
   return {
     ...options,
@@ -40,6 +44,7 @@ function normalizeOptions(
     projectRoot,
     sourceRoot,
     folderRoot,
+    domainImportPath,
     fileName: names(options.prismaModel).fileName,
   };
 }
@@ -59,6 +64,7 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
   const templateOptions = {
     ...options,
     ...names(options.prismaModel),
+    ...interfaceNames(options.prismaModel),
     offsetFromRoot: offsetFromRoot(options.projectRoot),
     template: '',
   };
