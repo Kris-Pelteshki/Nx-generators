@@ -1,30 +1,23 @@
 import { IReturnMany } from '@<%= workspace %>/utils-domain-design';
-import type { Create<%= className %>Dto, Update<%= className %>Dto } from '@<%= workspace %>/<%= propertyName %>/domain';
-import { <%= prismaModel %> } from '@prisma/client';
+import { <%= interfaceName %>, <%= createInterface %>, <%= updateInterface %>, <%= apiInterface %> } from '<%= domainImportPath %>';
 
-interface IApiClient<T> {
-  getOne(id: string): Promise<T>;
-  getMany(params?: unknown): Promise<IReturnMany<T>>;
-  create(data: Create<%= className %>Dto): Promise<T>;
-  update(data: Update<%= className %>Dto): Promise<T>;
-  delete(id: string): Promise<T>;
-}
-
-type ApiClient = IApiClient<<%= prismaModel %>>;
+// =================================================
+// TODO: Update the baseURL for the API
+// =================================================
 
 const baseURL = 'http://localhost:3333/api/<%= fileName %>';
 
-class <%= className %>Client implements ApiClient {
-  async getOne(id: string): Promise<<%= prismaModel %>> {
+class <%= className %>Client implements <%= apiInterface %> {
+  async getOne(id: string): Promise<<%= interfaceName %>> {
     const res = await fetch(`${baseURL}/${id}`);
     return res.json();
   }
 
-  async getMany(params?: unknown): Promise<IReturnMany<<%= prismaModel %>>> {
+  async getMany(params?: unknown): Promise<IReturnMany<<%= interfaceName %>>> {
     throw new Error('Method not implemented.');
   }
 
-  async create(data: Create<%= className %>Dto): Promise<<%= prismaModel %>> {
+  async create(data: <%= createInterface %>): Promise<<%= interfaceName %>> {
     const res = await fetch(`${baseURL}`, {
       method: 'POST',
       body: JSON.stringify(data),
@@ -35,7 +28,7 @@ class <%= className %>Client implements ApiClient {
     return res.json();
   }
 
-  async update(data: Update<%= className %>Dto): Promise<<%= prismaModel %>> {
+  async update(data: <%= updateInterface %>): Promise<<%= interfaceName %>> {
     const res = await fetch(`${baseURL}/${data.id}`, {
       method: 'PATCH',
       body: JSON.stringify(data),
@@ -46,7 +39,7 @@ class <%= className %>Client implements ApiClient {
     return res.json();
   }
 
-  async delete(id: string): Promise<<%= prismaModel %>> {
+  async delete(id: string): Promise<<%= interfaceName %>> {
     const res = await fetch(`${baseURL}/${id}`, {
       method: 'DELETE',
     });
