@@ -7,30 +7,35 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { Create<%= className %>Dto, Update<%= className %>Dto } from '@<%= workspace %>/<%= propertyName %>/domain';
-import { <%= className %>Repo } from '@<%= workspace %>/<%= propertyName %>/infrastructure';
+import { IReturnMany } from '@<%= workspace %>/utils-domain-design';
+import { <%= interfaceName %>, <%= createDto %>, <%= updateDto %>, <%= apiInterface %> } from '<%= domainImportPath %>';
+import { <%= repoName %> } from '<%= infraImportPath %>';
 
 @Controller('<%= fileName %>s')
-export class <%= className %>Controller {
-  constructor(private readonly <%= propertyName %>Repo: <%= className %>Repo) {}
+export class <%= className %>Controller implements <%= apiInterface %> {
+  constructor(private readonly <%= propertyName %>Repo: <%= repoName %>) {}
+
+  getMany(params?: unknown): Promise<IReturnMany<<%= interfaceName %>>> {
+    throw new Error('Method not implemented.');
+  }
 
   @Get(':id')
-  getOne(@Param('id') id: string) {
+  getOne(@Param('id') id: string): Promise<<%= interfaceName %>> {
     return this.<%= propertyName %>Repo.getOne(id);
   }
 
   @Post()
-  create(@Body() data: Create<%= className %>Dto) {
+  create(@Body() data: <%= createDto %>): Promise<<%= interfaceName %>> {
     return this.<%= propertyName %>Repo.create(data);
   }
 
   @Patch(':id')
-  update(@Body() data: Update<%= className %>Dto) {
+  update(@Body() data: <%= updateDto %>): Promise<<%= interfaceName %>> {
     return this.<%= propertyName %>Repo.update(data);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string) {
+  delete(@Param('id') id: string): Promise<<%= interfaceName %>> {
     return this.<%= propertyName %>Repo.delete(id);
   }
 }

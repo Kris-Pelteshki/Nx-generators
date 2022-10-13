@@ -20,11 +20,19 @@ export function getTsPath(tree: Tree, projectName: string) {
 
 export function getFolderPath(
   projectSourceRoot: string,
-  directoryPath?: string
+  directoryPath?: string,
+  pathPrefix = '/lib'
 ) {
   return directoryPath
-    ? `${projectSourceRoot}/lib/${directoryPath}`
-    : `${projectSourceRoot}/lib`;
+    ? `${projectSourceRoot}${pathPrefix}/${directoryPath}`
+    : projectSourceRoot + pathPrefix;
+}
+
+export function getAppFolderPath(
+  projectSourceRoot: string,
+  directoryPath?: string
+) {
+  return getFolderPath(projectSourceRoot, directoryPath, '/app');
 }
 
 export function getFilePathRelativeToProjectRoot(

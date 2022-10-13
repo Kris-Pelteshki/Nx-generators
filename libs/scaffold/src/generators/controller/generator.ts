@@ -8,12 +8,20 @@ import {
   Tree,
 } from '@nrwl/devkit';
 import * as path from 'path';
-import { BarrelUpdater, ExportStatementBuilder } from '../../utils';
+import {
+  BarrelUpdater,
+  ExportStatementBuilder,
+  getFolderPath,
+  getTsPath,
+  interfaceNames,
+} from '../../utils';
 import { ControllerGeneratorSchema } from './schema';
 
 interface NormalizedSchema extends ControllerGeneratorSchema {
   workspace: string;
   projectRoot: string;
+  domainImportPath: string;
+  infraImportPath: string;
   sourceRoot: string;
   folderRoot: string;
   fileName: string;
@@ -29,20 +37,22 @@ function normalizeOptions(
     options.project
   );
 
+  const domainImportPath = getTsPath(tree, options.domainProject);
+  const infraImportPath = getTsPath(tree, options.infrastructureProject);
+
   const isLib = tree
     .children(`${projectRoot}/src`)
     ?.some((child) => child === 'lib');
 
   const prefix = isLib ? 'lib' : 'app';
-
-  const folderRoot = options.directory
-    ? `${sourceRoot}/${prefix}/${options.directory}`
-    : `${sourceRoot}/${prefix}`;
+  const folderRoot = getFolderPath(sourceRoot, options.directory, `/${prefix}`);
 
   return {
     ...options,
     workspace: npmScope,
     projectRoot,
+    domainImportPath,
+    infraImportPath,
     sourceRoot,
     folderRoot,
     fileName: names(options.prismaModel).fileName,
@@ -72,9 +82,12 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
   const templateOptions = {
     ...options,
     ...names(options.prismaModel),
+    ...interfaceNames(options.prismaModel),
+    repoPropertyName: `${names(options.prismaModel).propertyName}Repo`,
     offsetFromRoot: offsetFromRoot(options.projectRoot),
     template: '',
   };
+
   generateFiles(
     tree,
     path.join(__dirname, 'files'),

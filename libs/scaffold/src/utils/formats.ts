@@ -7,6 +7,7 @@ export function interfaceNames(name: string) {
     prismaModel: className,
     interfaceName: `I${className}`,
     repoInterface: `I${className}Repo`,
+    repoName: `${className}Repo`,
     apiInterface: `I${className}Api`,
     createInterface: `ICreate${className}Dto`,
     updateInterface: `IUpdate${className}Dto`,

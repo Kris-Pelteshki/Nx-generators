@@ -22,6 +22,24 @@
       "alias": "p",
       "x-prompt": "What project would you like to target?"
     },
+    "domainProject": {
+      "type": "string",
+      "description": "The domain project to import interfaces from (e.g. IRepo, CreateDto, etc.).",
+      "$default": {
+        "$source": "projectName"
+      },
+      "alias": "p",
+      "x-prompt": "From which domain project to import interfaces from?"
+    },
+    "infrastructureProject": {
+      "type": "string",
+      "description": "The infrastructure project to import the repository or service.",
+      "$default": {
+        "$source": "projectName"
+      },
+      "alias": "p",
+      "x-prompt": "From which domain project to import interfaces from?"
+    },
     "directory": {
       "type": "string",
       "description": "The directory where the generated files are placed.",
@@ -34,5 +52,10 @@
     }
   },
   "additionalProperties": false,
-  "required": ["prismaModel", "project"]
+  "required": [
+    "prismaModel",
+    "project",
+    "domainProject",
+    "infrastructureProject"
+  ]
 }

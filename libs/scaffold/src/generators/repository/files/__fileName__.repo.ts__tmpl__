@@ -4,7 +4,7 @@ import { PrismaService } from '@<%= workspace %>/prisma';
 import { <%= interfaceName %>, <%= createInterface %>, <%= updateInterface %>, <%= repoInterface %> } from '<%= domainImportPath %>';
 
 @Injectable()
-export class <%= className %>Repo implements <%= repoInterface %> {
+export class <%= repoName %> implements <%= repoInterface %> {
   constructor(private readonly prisma: PrismaService) {}
 
   getOne(id: string): Promise<<%= interfaceName %> | null> {
