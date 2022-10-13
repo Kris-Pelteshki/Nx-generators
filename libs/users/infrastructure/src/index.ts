@@ -1,2 +1,1 @@
-export * from './lib/users.mapper';
-export * from './lib/users.repo';
+export * from './lib/user.repo';

@@ -1,30 +1,34 @@
 import { Injectable } from '@nestjs/common';
-import { IReturnMany, IRepo } from '@nx-repo/utils-domain-design';
+import { IReturnMany } from '@nx-repo/utils-domain-design';
 import { PrismaService } from '@nx-repo/prisma';
-import { CreateUserDto, UpdateUserDto } from '@nx-repo/users/domain';
-import { User } from '@prisma/client';
+import {
+  IUser,
+  ICreateUserDto,
+  IUpdateUserDto,
+  IUserRepo,
+} from '@nx-repo/users/domain';
 
 @Injectable()
-export class UsersRepo implements IRepo<User> {
+export class UserRepo implements IUserRepo {
   constructor(private readonly prisma: PrismaService) {}
 
-  getOne(id: string): Promise<User | null> {
+  getOne(id: string): Promise<IUser | null> {
     return this.prisma.user.findUnique({
       where: { id },
     });
   }
 
-  getMany(params?: unknown): Promise<IReturnMany<User>> {
+  getMany(params?: unknown): Promise<IReturnMany<IUser>> {
     throw new Error('Method not implemented.');
   }
 
-  create(data: CreateUserDto): Promise<User> {
+  create(data: ICreateUserDto): Promise<IUser> {
     return this.prisma.user.create({
       data,
     });
   }
 
-  update(data: UpdateUserDto): Promise<User> {
+  update(data: IUpdateUserDto): Promise<IUser> {
     return this.prisma.user.update({
       data,
       where: {
@@ -33,7 +37,7 @@ export class UsersRepo implements IRepo<User> {
     });
   }
 
-  delete(id: string): Promise<User> {
+  delete(id: string): Promise<IUser> {
     return this.prisma.user.delete({
       where: { id },
     });
