@@ -10,7 +10,7 @@ import {
   addProject,
   deleteFiles,
   updateTsConfig,
-} from '../../utils/lib';
+} from '../../utils/lib-creation';
 import {
   createFiles,
   normalizeOptions,

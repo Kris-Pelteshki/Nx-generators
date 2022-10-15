@@ -4,33 +4,36 @@ import ts = require('typescript');
 
 export class BarrelUpdater {
   private _tree: Tree;
-  private _barrelPath: string;
-  private _contentToAdd: string;
+  private _indexPath: string;
+  private _contentToAdd: string[] = [];
 
-  constructor(tree: Tree) {
+  constructor({ tree, indexPath }: { tree: Tree; indexPath: string }) {
     this._tree = tree;
+    this._indexPath = indexPath;
   }
 
-  barrelPath(path: string) {
-    this._barrelPath = path;
-    return this;
-  }
-
-  contentToAdd(content: string) {
-    this._contentToAdd = content;
+  add(content: string) {
+    this._contentToAdd.push(content);
     return this;
   }
 
   update() {
-    const barrelContent = this._tree.read(this._barrelPath, 'utf-8');
+    const barrelContent = this._tree.read(this._indexPath, 'utf-8');
 
     let sourceFile = ts.createSourceFile(
-      this._barrelPath,
+      this._indexPath,
       barrelContent,
       ts.ScriptTarget.Latest,
       true
     );
 
-    addGlobal(this._tree, sourceFile, this._barrelPath, this._contentToAdd);
+    const contentSeparatedByNewLine = this._contentToAdd.join('\n');
+
+    addGlobal(
+      this._tree,
+      sourceFile,
+      this._indexPath,
+      contentSeparatedByNewLine
+    );
   }
 }

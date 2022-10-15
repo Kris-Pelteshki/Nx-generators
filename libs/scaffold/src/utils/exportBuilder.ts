@@ -1,6 +1,6 @@
 import { getExportStatement } from './paths';
 
-export class ExportStatementBuilder {
+export class ExportsBuilder {
   private _fileNames: string[] = [];
   private _dir: string;
   private _pathPrefix: string;

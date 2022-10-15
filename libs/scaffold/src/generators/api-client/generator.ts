@@ -10,7 +10,7 @@ import {
 import * as path from 'path';
 import {
   BarrelUpdater,
-  ExportStatementBuilder,
+  ExportsBuilder,
   getFolderPath,
   getTsPath,
   interfaceNames,
@@ -50,13 +50,15 @@ function normalizeOptions(
 }
 
 function updateBarrel(tree: Tree, options: NormalizedSchema) {
-  const exports = new ExportStatementBuilder()
+  const exports = new ExportsBuilder()
     .directory(options.directory)
     .fileNames([`${options.fileName}.client`]);
 
-  new BarrelUpdater(tree)
-    .barrelPath(`${options.projectRoot}/src/index.ts`)
-    .contentToAdd(exports.build())
+  new BarrelUpdater({
+    tree,
+    indexPath: `${options.projectRoot}/src/index.ts`,
+  })
+    .add(exports.build())
     .update();
 }
 

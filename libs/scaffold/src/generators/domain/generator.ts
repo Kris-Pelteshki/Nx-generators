@@ -1,16 +1,15 @@
 import {
   formatFiles,
-  generateFiles,
   getWorkspaceLayout,
   names,
   offsetFromRoot,
   readProjectConfiguration,
   Tree,
 } from '@nrwl/devkit';
-import * as path from 'path';
 import {
   BarrelUpdater,
-  ExportStatementBuilder,
+  ExportsBuilder,
+  GenerateFilesBuilder,
   getFolderPath,
   interfaceNames,
 } from '../../utils';
@@ -51,7 +50,7 @@ function normalizeOptions(
 }
 
 function updateBarrel(tree: Tree, options: NormalizedSchema) {
-  const exports = new ExportStatementBuilder()
+  const exports = new ExportsBuilder()
     .directory(options.directory)
     .fileNames([`${options.fileName}.models`]);
 
@@ -63,9 +62,11 @@ function updateBarrel(tree: Tree, options: NormalizedSchema) {
     exports.addFile(`${options.fileName}.api`);
   }
 
-  new BarrelUpdater(tree)
-    .barrelPath(`${options.projectRoot}/src/index.ts`)
-    .contentToAdd(exports.build())
+  new BarrelUpdater({
+    tree,
+    indexPath: `${options.projectRoot}/src/index.ts`,
+  })
+    .add(exports.build())
     .update();
 }
 
@@ -78,22 +79,22 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     template: '',
   };
 
-  const genFiles = (pathTo: string) =>
-    generateFiles(
-      tree,
-      path.join(__dirname, pathTo),
-      options.folderRoot,
-      templateOptions
-    );
-
-  genFiles('files/common');
-
-  if (options.addRepoInterface) {
-    genFiles('files/repo');
-  }
-  if (options.addApiInterface) {
-    genFiles('files/api');
-  }
+  new GenerateFilesBuilder({
+    tree,
+    templateOptions,
+    rootPath: __dirname,
+    dirToPlaceFiles: options.folderRoot,
+  })
+    .add('files/common')
+    .add({
+      folder: 'files/repo',
+      condition: options.addRepoInterface,
+    })
+    .add({
+      folder: 'files/api',
+      condition: options.addApiInterface,
+    })
+    .generate();
 }
 
 export default async function (tree: Tree, options: DomainGeneratorSchema) {

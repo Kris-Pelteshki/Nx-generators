@@ -10,11 +10,11 @@ import {
 } from '@nrwl/devkit';
 import * as path from 'path';
 import {
-  BarrelUpdater,
-  ExportStatementBuilder,
   interfaceNames,
+  updateBarrel,
+  getTsPath,
+  getFolderPath,
 } from '../../utils';
-import { getTsPath, getFolderPath } from '../../utils/paths';
 import { RepositoryGeneratorSchema } from './schema';
 
 interface NormalizedSchema extends RepositoryGeneratorSchema {
@@ -40,7 +40,7 @@ function normalizeOptions(
   const folderRoot = getFolderPath(sourceRoot, options.directory);
 
   const prismaClientProperty = names(options.prismaModel).propertyName;
-  const fileName = names(options.prismaModel).propertyName;
+  const fileName = prismaClientProperty;
 
   return {
     ...options,
@@ -54,18 +54,9 @@ function normalizeOptions(
   };
 }
 
-function updateBarrel(tree: Tree, options: NormalizedSchema) {
-  const exports = new ExportStatementBuilder()
-    .directory(options.directory)
-    .fileNames([`${options.fileName}.repo`]);
-
-  new BarrelUpdater(tree)
-    .barrelPath(`${options.projectRoot}/src/index.ts`)
-    .contentToAdd(exports.build())
-    .update();
-}
-
 function addFiles(tree: Tree, options: NormalizedSchema) {
+  const { folderRoot, fileName } = options;
+
   const templateOptions = {
     ...options,
     ...names(options.prismaModel),
@@ -77,14 +68,12 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
   generateFiles(
     tree,
     path.join(__dirname, 'files'),
-    options.folderRoot,
+    folderRoot,
     templateOptions
   );
 
   if (options.unitTestRunner === 'none') {
-    tree.delete(
-      joinPathFragments(options.folderRoot, `${options.fileName}.repo.spec.ts`)
-    );
+    tree.delete(joinPathFragments(folderRoot, `${fileName}.repo.spec.ts`));
   }
 }
 
@@ -92,7 +81,12 @@ export default async function (tree: Tree, options: RepositoryGeneratorSchema) {
   const normalizedOptions = normalizeOptions(tree, options);
 
   addFiles(tree, normalizedOptions);
-  updateBarrel(tree, normalizedOptions);
+
+  updateBarrel({
+    tree,
+    options: normalizedOptions,
+    exports: [`${normalizedOptions.fileName}.repo`],
+  });
 
   if (!options.skipFormat) {
     await formatFiles(tree);

@@ -2,7 +2,7 @@ import type { Tree } from '@nrwl/devkit';
 import { names } from '@nrwl/devkit';
 import type { LibraryGeneratorSchema as JsLibraryGeneratorSchema } from '@nrwl/js/src/utils/schema';
 
-import { baseNormalizeOptions } from '../../../utils/lib';
+import { baseNormalizeOptions } from '../../../utils/lib-creation';
 import type { LibraryGeneratorOptions, NormalizedOptions } from '../schema';
 
 export function normalizeOptions(

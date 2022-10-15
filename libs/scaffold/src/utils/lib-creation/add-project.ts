@@ -13,6 +13,8 @@ export function addProject(tree: Tree, options: IAddProjectOptions): void {
   const project = readProjectConfiguration(tree, options.projectName);
 
   if (project.targets) {
+    const root = options.projectRoot;
+
     project.targets.build = {
       executor: '@nrwl/js:tsc',
       outputs: ['{options.outputPath}'],
@@ -20,10 +22,10 @@ export function addProject(tree: Tree, options: IAddProjectOptions): void {
         outputPath: `dist/${getWorkspaceLayout(tree).libsDir}/${
           options.projectDirectory
         }`,
-        tsConfig: `${options.projectRoot}/tsconfig.lib.json`,
-        packageJson: `${options.projectRoot}/package.json`,
-        main: `${options.projectRoot}/src/index.ts`,
-        assets: [`${options.projectRoot}/*.md`],
+        tsConfig: `${root}/tsconfig.lib.json`,
+        packageJson: `${root}/package.json`,
+        main: `${root}/src/index.ts`,
+        assets: [`${root}/*.md`],
       },
     };
   }

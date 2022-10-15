@@ -12,7 +12,6 @@ export function baseNormalizeOptions<IOptions extends BaseGenerateLibSchema>(
     ? `${names(options.directory).fileName}/${name}`
     : name;
 
-  // const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
   const projectRoot = joinPathFragments(libsDir, projectDirectory);
 
   const fileName = names(options.name).propertyName;
