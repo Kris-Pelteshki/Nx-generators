@@ -1,21 +1,41 @@
 import { Tree } from '@nrwl/devkit';
 import { joinPathFragments } from '@nrwl/devkit';
+import { removeChange } from '@nrwl/workspace/src/utilities/ast-utils';
+import ts = require('typescript');
 
 export function deleteFiles(
   tree: Tree,
   options: BaseLibNormalizedOptions
 ): void {
-  function pathAtLibDir(fileName: string): string {
-    return joinPathFragments(options.projectRoot, 'src', 'lib', fileName);
-  }
+  const libFolderPath = joinPathFragments(options.projectRoot, 'src', 'lib');
 
-  tree.delete(pathAtLibDir(`${options.projectName}.ts`));
+  tree.children(libFolderPath).forEach((fileName) => {
+    const filePath = joinPathFragments(libFolderPath, fileName);
 
-  if (options.unitTestRunner !== 'none') {
-    tree.delete(pathAtLibDir(`${options.projectName}.spec.ts`));
-  }
+    if (tree.isFile(filePath)) {
+      tree.delete(filePath);
+    }
+  });
 
   if (!options.buildable && !options.publishable) {
     tree.delete(joinPathFragments(options.projectRoot, 'package.json'));
   }
+
+  deleteBarrelFileContents(tree, options);
+}
+
+function deleteBarrelFileContents(
+  tree: Tree,
+  options: BaseLibNormalizedOptions
+) {
+  const indexPath = `${options.projectRoot}/src/index.ts`;
+  const indexContent = tree.read(indexPath, 'utf-8') as string;
+  let sourceFile = ts.createSourceFile(
+    indexPath,
+    indexContent,
+    ts.ScriptTarget.Latest,
+    true
+  );
+
+  sourceFile = removeChange(tree, sourceFile, indexPath, 0, sourceFile.text);
 }

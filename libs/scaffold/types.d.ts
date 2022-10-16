@@ -27,8 +27,6 @@ declare interface BaseGenerateLibSchema {
 }
 
 declare interface BaseLibNormalizedOptions extends BaseGenerateLibSchema {
-  className: string;
-  fileName: string;
   parsedTags: string[];
   prefix: string;
   projectDirectory: string;

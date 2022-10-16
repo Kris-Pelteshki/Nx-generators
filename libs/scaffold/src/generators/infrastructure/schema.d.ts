@@ -1,10 +1,5 @@
-import { Linter } from '@nrwl/linter';
+interface LibraryGeneratorOptions
+  extends BaseGenerateLibSchema,
+    Pick<RepositoryGeneratorSchema, 'prismaModel' | 'domainProject'> {}
 
-export interface LibraryGeneratorOptions extends BaseGenerateLibSchema {
-  prismaModel: string;
-}
-
-export interface NormalizedOptions extends BaseLibNormalizedOptions {
-  prismaModel: string;
-  prismaClientProperty: string;
-}
+interface NormalizedOptions extends BaseLibNormalizedOptions {}

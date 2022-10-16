@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "$id": "NxNestLibraryGenerator",
-  "title": "Create a NestJS infrastructure Library for Nx",
-  "description": "Create a NestJS infrastructure Library for Nx.",
+  "$id": "NxNestInfraLibraryGenerator",
+  "title": "Infrastructure Lib",
+  "description": "Create a NestJS infrastructure Library for Nx with NestJs and prisma.",
   "cli": "nx",
   "type": "object",
   "examples": [
@@ -12,14 +12,6 @@
     }
   ],
   "properties": {
-    "prismaModel": {
-      "description": "The name of the prisma model in the schema.prisma file.",
-      "type": "string",
-      "$default": {
-        "$source": "argv",
-        "index": 0
-      }
-    },
     "name": {
       "description": "Library name.",
       "type": "string",
@@ -34,6 +26,23 @@
       "description": "A directory where the library is placed.",
       "type": "string",
       "alias": "dir"
+    },
+    "prismaModel": {
+      "description": "The name of the prisma model in the `schema.prisma` file.",
+      "type": "string",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      }
+    },
+    "domainProject": {
+      "type": "string",
+      "description": "The domain project to import interfaces from (e.g. CreateDto, UpdateDto, etc.).",
+      "$default": {
+        "$source": "projectName"
+      },
+      "alias": "p",
+      "x-prompt": "From which domain project to import interfaces from?"
     },
     "linter": {
       "description": "The tool to use for running lint checks.",
@@ -116,5 +125,5 @@
     }
   },
   "additionalProperties": false,
-  "required": ["name", "prismaModel"]
+  "required": ["name", "prismaModel", "domainProject"]
 }

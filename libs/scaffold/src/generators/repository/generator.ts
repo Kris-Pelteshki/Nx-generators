@@ -15,7 +15,6 @@ import {
   getTsPath,
   getFolderPath,
 } from '../../utils';
-import { RepositoryGeneratorSchema } from './schema';
 
 interface NormalizedSchema extends RepositoryGeneratorSchema {
   projectRoot: string;

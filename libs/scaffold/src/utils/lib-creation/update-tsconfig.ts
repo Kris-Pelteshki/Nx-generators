@@ -1,4 +1,4 @@
-import type { Tree } from '@nrwl/devkit';
+import { Tree } from '@nrwl/devkit';
 import { readProjectConfiguration, updateJson } from '@nrwl/devkit';
 
 export function updateTsConfig(
@@ -12,10 +12,12 @@ export function updateTsConfig(
     if (options.strict) {
       json.compilerOptions = {
         ...json.compilerOptions,
-        forceConsistentCasingInFileNames: true,
         strict: true,
+        forceConsistentCasingInFileNames: true,
         noImplicitReturns: true,
         noFallthroughCasesInSwitch: true,
+        noImplicitOverride: true,
+        noPropertyAccessFromIndexSignature: true,
       };
     }
 

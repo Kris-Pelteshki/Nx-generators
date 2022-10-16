@@ -1,4 +1,4 @@
-export interface RepositoryGeneratorSchema {
+interface RepositoryGeneratorSchema {
   prismaModel: string;
   project: string;
   domainProject: string;

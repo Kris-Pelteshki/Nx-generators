@@ -5,32 +5,31 @@ import {
   formatFiles,
 } from '@nrwl/devkit';
 import { libraryGenerator } from '@nrwl/workspace/generators';
+
 import {
-  addExportsToExportFile,
   addProject,
+  baseNormalizeOptions,
   deleteFiles,
+  toLibraryGeneratorOptions,
   updateTsConfig,
 } from '../../utils/lib-creation';
-import {
-  createFiles,
-  normalizeOptions,
-  toLibraryGeneratorOptions,
-} from './lib';
-import type { LibraryGeneratorOptions } from './schema';
+import repositoryGenerator from '../repository/generator';
 
 export default async function (
   tree: Tree,
   rawOptions: LibraryGeneratorOptions
 ): Promise<GeneratorCallback> {
   const options = normalizeOptions(tree, rawOptions);
+
   await libraryGenerator(tree, toLibraryGeneratorOptions(options));
-
   deleteFiles(tree, options);
-  createFiles(tree, options);
 
-  addExportsToExportFile(tree, {
-    ...options,
-    contentToAddToFile: `export * from './lib/${options.fileName}.repo';`,
+  // create repo files
+  repositoryGenerator(tree, {
+    ...rawOptions,
+    project: options.projectName,
+    directory: '',
+    skipFormat: true,
   });
 
   updateTsConfig(tree, options);
@@ -42,5 +41,15 @@ export default async function (
 
   return () => {
     installPackagesTask(tree);
+  };
+}
+
+function normalizeOptions(
+  tree: Tree,
+  options: LibraryGeneratorOptions
+): NormalizedOptions {
+  return {
+    ...options,
+    ...baseNormalizeOptions(tree, options),
   };
 }
