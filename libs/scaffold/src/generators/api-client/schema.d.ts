@@ -1,8 +1,8 @@
-export interface ApiClientGeneratorSchema {
+interface ApiClientGeneratorSchema {
   prismaModel: string;
-  project: string;
+  projectName: string;
   domainProject: string;
   directory?: string;
-  useAxios?: boolean;
+  clientType: 'axios' | 'fetch';
   skipFormat?: boolean;
 }

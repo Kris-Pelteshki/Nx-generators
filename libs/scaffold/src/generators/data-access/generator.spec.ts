@@ -3,10 +3,10 @@ import { Tree, readProjectConfiguration } from '@nrwl/devkit';
 
 import generator from './generator';
 
-describe('apiClient generator', () => {
+describe('data-access generator', () => {
   let appTree: Tree;
-  const options: ApiClientGeneratorSchema = {
-    projectName: 'data-access',
+  const options: DataAccessGeneratorSchema = {
+    name: 'data-acess',
     directory: 'test',
     domainProject: 'todo-domain',
     prismaModel: 'Todo',

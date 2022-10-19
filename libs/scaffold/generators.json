@@ -32,6 +32,11 @@
       "factory": "./src/generators/domain-lib/generator",
       "schema": "./src/generators/domain-lib/schema.json",
       "description": "Creates a domain library"
+    },
+    "data-access": {
+      "factory": "./src/generators/data-access/generator",
+      "schema": "./src/generators/data-access/schema.json",
+      "description": "Creates a data-access library"
     }
   }
 }

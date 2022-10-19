@@ -13,7 +13,7 @@
         "index": 0
       }
     },
-    "project": {
+    "projectName": {
       "type": "string",
       "description": "The Nest project to target.",
       "$default": {
@@ -36,10 +36,11 @@
       "description": "Directory where the generated files are placed.",
       "aliases": ["dir", "path"]
     },
-    "useAxios": {
-      "type": "boolean",
-      "description": "Do you want to use axios instead of fetch?",
-      "default": true
+    "clientType": {
+      "description": "What do you want to use for making requests?",
+      "type": "string",
+      "enum": ["axios", "fetch"],
+      "default": "axios"
     },
     "skipFormat": {
       "type": "boolean",
@@ -48,5 +49,5 @@
     }
   },
   "additionalProperties": false,
-  "required": ["prismaModel", "project", "domainProject"]
+  "required": ["prismaModel", "projectName", "domainProject", "clientType"]
 }

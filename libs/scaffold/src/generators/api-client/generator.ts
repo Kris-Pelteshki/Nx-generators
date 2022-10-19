@@ -15,7 +15,6 @@ import {
   getTsPath,
   interfaceNames,
 } from '../../utils';
-import { ApiClientGeneratorSchema } from './schema';
 
 interface NormalizedSchema extends ApiClientGeneratorSchema {
   projectRoot: string;
@@ -33,7 +32,7 @@ function normalizeOptions(
   const { npmScope } = getWorkspaceLayout(tree);
   const { sourceRoot, root: projectRoot } = readProjectConfiguration(
     tree,
-    options.project
+    options.projectName
   );
   const domainImportPath = getTsPath(tree, options.domainProject);
   const folderRoot = getFolderPath(sourceRoot, options.directory);
@@ -71,7 +70,13 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     template: '',
   };
 
-  const filePath = options.useAxios ? 'files/axios' : 'files/fetch';
+  const clientTypeMap: Record<ApiClientGeneratorSchema['clientType'], string> =
+    {
+      axios: 'files/axios',
+      fetch: 'files/fetch',
+    };
+
+  const filePath = clientTypeMap[options.clientType];
 
   generateFiles(
     tree,
