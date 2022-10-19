@@ -1,6 +1,6 @@
-export interface DomainGeneratorSchema {
+interface DomainGeneratorSchema {
   prismaModel: string;
-  project: string;
+  projectName: string;
   directory?: string;
   addRepoInterface?: boolean;
   addApiInterface?: boolean;

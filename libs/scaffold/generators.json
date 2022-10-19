@@ -27,6 +27,11 @@
       "factory": "./src/generators/domain/generator",
       "schema": "./src/generators/domain/schema.json",
       "description": "Creates a domain library template."
+    },
+    "domain-lib": {
+      "factory": "./src/generators/domain-lib/generator",
+      "schema": "./src/generators/domain-lib/schema.json",
+      "description": "Creates a domain library"
     }
   }
 }

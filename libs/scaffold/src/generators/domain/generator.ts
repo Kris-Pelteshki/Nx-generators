@@ -13,7 +13,6 @@ import {
   getFolderPath,
   interfaceNames,
 } from '../../utils';
-import { DomainGeneratorSchema } from './schema';
 
 interface NormalizedSchema extends DomainGeneratorSchema {
   projectRoot: string;
@@ -31,7 +30,7 @@ function normalizeOptions(
   const { npmScope } = getWorkspaceLayout(tree);
   const { sourceRoot, root: projectRoot } = readProjectConfiguration(
     tree,
-    options.project
+    options.projectName
   );
   const folderRoot = getFolderPath(sourceRoot, options.directory);
 

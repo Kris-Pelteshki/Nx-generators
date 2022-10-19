@@ -1,5 +1,5 @@
-interface LibraryGeneratorOptions
+interface InfraLibraryGeneratorOptions
   extends BaseGenerateLibSchema,
     Pick<RepositoryGeneratorSchema, 'prismaModel' | 'domainProject'> {}
 
-interface NormalizedOptions extends BaseLibNormalizedOptions {}
+interface InfraNormalizedOptions extends BaseLibNormalizedOptions {}

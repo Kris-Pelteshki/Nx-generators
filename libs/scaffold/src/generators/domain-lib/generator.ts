@@ -13,21 +13,20 @@ import {
   toLibraryGeneratorOptions,
   updateTsConfig,
 } from '../../utils/lib-creation';
-import repositoryGenerator from '../repository/generator';
+import domainGenerator from '../domain/generator';
 
 export default async function (
   tree: Tree,
-  rawOptions: InfraLibraryGeneratorOptions
+  rawOptions: DomainLibGeneratorSchema
 ): Promise<GeneratorCallback> {
   const options = normalizeOptions(tree, rawOptions);
 
   await libraryGenerator(tree, toLibraryGeneratorOptions(options));
   deleteFiles(tree, options);
 
-  // create repo files
-  repositoryGenerator(tree, {
+  domainGenerator(tree, {
     ...rawOptions,
-    project: options.projectName,
+    projectName: options.projectName,
     directory: '',
     skipFormat: true,
   });
@@ -46,8 +45,8 @@ export default async function (
 
 function normalizeOptions(
   tree: Tree,
-  options: InfraLibraryGeneratorOptions
-): InfraNormalizedOptions {
+  options: DomainLibGeneratorSchema
+): DomainNormalizedOptions {
   return {
     ...options,
     ...baseNormalizeOptions(tree, options),
