@@ -6,6 +6,7 @@ import {
   readProjectConfiguration,
   Tree,
 } from '@nrwl/devkit';
+import path = require('path');
 import {
   BarrelUpdater,
   ExportsBuilder,
@@ -78,19 +79,20 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     template: '',
   };
 
+  const getPath = (filePath: string) => path.join(__dirname, filePath);
+
   new GenerateFilesBuilder({
     tree,
     templateOptions,
-    rootPath: __dirname,
     dirToPlaceFiles: options.folderRoot,
   })
-    .add('files/common')
+    .add(getPath('files/common'))
     .add({
-      folder: 'files/repo',
+      folder: getPath('files/repo'),
       condition: options.addRepoInterface,
     })
     .add({
-      folder: 'files/api',
+      folder: getPath('files/api'),
       condition: options.addApiInterface,
     })
     .generate();

@@ -1,22 +1,19 @@
-import { generateFiles, joinPathFragments, Tree } from '@nrwl/devkit';
+import { generateFiles, Tree } from '@nrwl/devkit';
 
 type IConfig = {
   tree: Tree;
-  rootPath: string;
   dirToPlaceFiles: string;
   templateOptions: Record<string, any>;
 };
 
 export class GenerateFilesBuilder {
   private _tree: Tree;
-  private _rootPath: string;
   private _dirToPlaceFiles: string;
   private _templateOptions: Record<string, any>;
-  private _filePaths: string[] = [];
+  private _folders: string[] = [];
 
   constructor(config: IConfig) {
     this._tree = config.tree;
-    this._rootPath = config.rootPath;
     this._dirToPlaceFiles = config.dirToPlaceFiles;
     this._templateOptions = config.templateOptions;
   }
@@ -34,21 +31,21 @@ export class GenerateFilesBuilder {
    */
   add(arg: string | { folder: string; condition: boolean }) {
     if (typeof arg === 'string') {
-      this._filePaths.push(arg);
+      this._folders.push(arg);
       return this;
     }
 
     if (arg.condition) {
-      this._filePaths.push(arg.folder);
+      this._folders.push(arg.folder);
     }
     return this;
   }
 
   generate() {
-    this._filePaths.forEach((filePath) => {
+    this._folders.forEach((folderPath) => {
       generateFiles(
         this._tree,
-        joinPathFragments(this._rootPath, filePath),
+        folderPath,
         this._dirToPlaceFiles,
         this._templateOptions
       );
