@@ -5,3 +5,5 @@ export * from './interfaceNames';
 export * from './paths';
 
 export * from './updateBarrel';
+
+export * from './sourceFileHelper';

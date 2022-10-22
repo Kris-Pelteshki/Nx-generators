@@ -15,6 +15,7 @@ import {
   getTsPath,
   interfaceNames,
 } from '../../utils';
+import { addControllerToModule, addProviderToModule } from '../../utils/nest';
 import { ControllerGeneratorSchema } from './schema';
 
 interface NormalizedSchema extends ControllerGeneratorSchema {
@@ -96,6 +97,25 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     options.folderRoot,
     templateOptions
   );
+
+  // TODO implement a "nearest" algo to find app.module.ts
+  const appModulePath = path.join(options.sourceRoot, 'app', 'app.module.ts');
+
+  // TODO extract Controller name to utils
+  // TODO: add a check to do this only if you know where to find app module
+  addControllerToModule(
+    tree,
+    appModulePath,
+    `${names(options.prismaModel).className}Controller`
+  );
+
+  addProviderToModule(
+    tree,
+    appModulePath,
+    `${names(options.prismaModel).className}Repo`
+  );
+
+  //TODO:  add imports to files
 }
 
 export default async function (tree: Tree, options: ControllerGeneratorSchema) {
