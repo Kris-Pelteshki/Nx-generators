@@ -7,7 +7,7 @@ import { <%= interfaceName %>, <%= createInterface %>, <%= updateInterface %>, <
 
 const baseURL = 'http://localhost:3333/api/<%= fileName %>';
 
-class <%= className %>Client implements <%= apiInterface %> {
+export class <%= className %>Client implements <%= apiInterface %> {
   async getOne(id: string): Promise<<%= interfaceName %>> {
     const res = await fetch(`${baseURL}/${id}`);
     return res.json();
@@ -46,5 +46,3 @@ class <%= className %>Client implements <%= apiInterface %> {
     return res.json();
   }
 }
-
-export const <%= propertyName %>Client = new <%= className %>Client();
