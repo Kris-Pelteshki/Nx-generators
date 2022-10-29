@@ -3,6 +3,7 @@ import {
   getWorkspaceLayout,
   readProjectConfiguration,
 } from '@nrwl/devkit';
+import path = require('path');
 
 /**
  * Get the project import path for a project
@@ -57,4 +58,30 @@ export function getExportStatement(
   );
 
   return `export * from '${filePath}';`;
+}
+
+/**
+ * Searches for a file through parent directories
+ */
+export function getClosestPath(
+  tree: Tree,
+  absolutePath: string,
+  patternToMatch: string | RegExp
+): string {
+  const parentDirectories = absolutePath.split('/');
+
+  for (let index = 0; index < parentDirectories.length; index++) {
+    const endIndex = -index || undefined;
+    const directory = parentDirectories.slice(0, endIndex).join('/');
+
+    const matchedFileName = tree.children(directory).find((child) => {
+      return (
+        child.match(patternToMatch) && tree.isFile(`${directory}/${child}`)
+      );
+    });
+
+    if (matchedFileName) {
+      return `${directory}/${matchedFileName}`;
+    }
+  }
 }

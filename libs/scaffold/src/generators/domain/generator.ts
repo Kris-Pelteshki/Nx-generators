@@ -10,7 +10,7 @@ import path = require('path');
 import {
   BarrelUpdater,
   ExportsBuilder,
-  GenerateFilesBuilder,
+  GenerateFilesHelper,
   getFolderPath,
   interfaceNames,
 } from '../../utils';
@@ -81,7 +81,7 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
 
   const getPath = (filePath: string) => path.join(__dirname, filePath);
 
-  new GenerateFilesBuilder({
+  new GenerateFilesHelper({
     tree,
     templateOptions,
     dirToPlaceFiles: options.folderRoot,

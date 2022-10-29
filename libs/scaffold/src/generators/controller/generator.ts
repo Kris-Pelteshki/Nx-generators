@@ -11,6 +11,7 @@ import * as path from 'path';
 import {
   BarrelUpdater,
   ExportsBuilder,
+  getClosestPath,
   getFolderPath,
   getTsPath,
   interfaceNames,
@@ -98,8 +99,11 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     templateOptions
   );
 
-  // TODO implement a "nearest" algo to find app.module.ts
-  const appModulePath = path.join(options.sourceRoot, 'app', 'app.module.ts');
+  const appModulePath = getClosestPath(
+    tree,
+    options.folderRoot,
+    'app.module.ts'
+  );
 
   // TODO extract Controller name to utils
   // TODO: add a check to do this only if you know where to find app module

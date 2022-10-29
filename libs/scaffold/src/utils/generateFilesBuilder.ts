@@ -6,7 +6,7 @@ type IConfig = {
   templateOptions: Record<string, any>;
 };
 
-export class GenerateFilesBuilder {
+export class GenerateFilesHelper {
   private _tree: Tree;
   private _dirToPlaceFiles: string;
   private _templateOptions: Record<string, any>;
