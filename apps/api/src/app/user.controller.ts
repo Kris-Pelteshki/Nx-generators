@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -7,9 +6,9 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
-import { IReturnMany } from '@nx-repo/utils-domain-design';
+import { BaseQueryParams, IReturnMany } from '@nx-repo/utils-domain-design';
 import {
   IUser,
   CreateUserDto,
@@ -22,27 +21,19 @@ import { UserRepo } from '@nx-repo/users/infrastructure';
 export class UserController implements IUserApi {
   constructor(private readonly userRepo: UserRepo) {}
 
-  getMany(params?: unknown): Promise<IReturnMany<IUser>> {
-    throw new Error('Method not implemented.');
-  }
-
   @Get(':id')
   getOne(@Param('id') id: string): Promise<IUser> {
     return this.userRepo.getOne(id);
   }
 
+  @Get()
+  getMany(@Query() params?: BaseQueryParams): Promise<IReturnMany<IUser>> {
+    return this.userRepo.getMany(params);
+  }
+
   @Post()
-  async create(@Body() data: CreateUserDto): Promise<IUser> {
-    try {
-      return await this.userRepo.create(data);
-    } catch (e) {
-      if (e instanceof Prisma.PrismaClientKnownRequestError) {
-        if (e.code === 'P2002') {
-          throw new BadRequestException(e.message);
-        }
-      }
-      throw e;
-    }
+  create(@Body() data: CreateUserDto): Promise<IUser> {
+    return this.userRepo.create(data);
   }
 
   @Patch(':id')

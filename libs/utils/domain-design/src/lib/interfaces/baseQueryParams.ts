@@ -1,5 +1,4 @@
-export interface BaseQueryParams {
+export type BaseQueryParams = {
   take: number;
   skip?: number;
-  cursor?: string | number;
-}
+};

@@ -1,9 +1,9 @@
-import { IReturnMany } from '@<%= workspace %>/utils-domain-design';
+import { BaseQueryParams, IReturnMany } from '@<%= workspace %>/utils-domain-design';
 import { <%= interfaceName %>, <%= createInterface %>, <%= updateInterface %> } from './<%= fileName %>.models';
 
 export type <%= apiInterface %> = {
   getOne(id: string): Promise<<%= interfaceName %>>;
-  getMany(params?: unknown): Promise<IReturnMany<<%= interfaceName %>>>;
+  getMany(params?: BaseQueryParams): Promise<IReturnMany<<%= interfaceName %>>>;
   create(data: <%= createInterface %>): Promise<<%= interfaceName %>>;
   update(data: <%= updateInterface %>): Promise<<%= interfaceName %>>;
   delete(id: string): Promise<<%= interfaceName %>>;

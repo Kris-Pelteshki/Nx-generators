@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { IReturnMany } from '@nx-repo/utils-domain-design';
+import { BaseQueryParams, IReturnMany } from '@nx-repo/utils-domain-design';
 import { PrismaService } from '@nx-repo/prisma';
 import {
   IUser,
@@ -18,8 +18,16 @@ export class UserRepo implements IUserRepo {
     });
   }
 
-  getMany(params?: unknown): Promise<IReturnMany<IUser>> {
-    throw new Error('Method not implemented.');
+  async getMany(params?: BaseQueryParams): Promise<IReturnMany<IUser>> {
+    const [count, data] = await Promise.all([
+      this.prisma.user.count(),
+      this.prisma.user.findMany(params),
+    ]);
+
+    return {
+      count,
+      data,
+    };
   }
 
   create(data: ICreateUserDto): Promise<IUser> {

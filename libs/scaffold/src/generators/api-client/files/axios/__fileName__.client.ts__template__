@@ -1,5 +1,5 @@
 import axios, { AxiosPromise } from 'axios';
-import { IReturnMany, AxiosApiClient } from '@<%= workspace %>/utils-domain-design';
+import { BaseQueryParams, IReturnMany, AxiosApiClient } from '@<%= workspace %>/utils-domain-design';
 import { <%= interfaceName %>, <%= createInterface %>, <%= updateInterface %>, <%= apiInterface %> } from '<%= domainImportPath %>';
 
 // =================================================
@@ -15,8 +15,8 @@ export class <%= className %>Client implements AxiosApiClient<<%= apiInterface %
     return instance.get(`/${id}`);
   }
 
-  getMany(params?: unknown): AxiosPromise<IReturnMany<<%= interfaceName %>>> {
-    throw new Error('Method not implemented.');
+  getMany(params?: BaseQueryParams): AxiosPromise<IReturnMany<<%= interfaceName %>>> {
+    return instance.get('/', { params });
   }
 
   create(data: <%= createInterface %>): AxiosPromise<<%= interfaceName %>> {

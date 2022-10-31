@@ -6,8 +6,10 @@ import {
   Param,
   Patch,
   Post,
+  Query,
+  ValidationPipe,
 } from '@nestjs/common';
-import { IReturnMany } from '@nx-repo/utils-domain-design';
+import { BaseQueryParams, IReturnMany } from '@nx-repo/utils-domain-design';
 import {
   ITodo,
   CreateTodoDto,
@@ -20,8 +22,9 @@ import { TodoRepo } from '@nx-repo/todo/infrastructure';
 export class TodoController implements ITodoApi {
   constructor(private readonly todoRepo: TodoRepo) {}
 
-  getMany(params?: unknown): Promise<IReturnMany<ITodo>> {
-    throw new Error('Method not implemented.');
+  @Get()
+  getMany(@Query() params?: BaseQueryParams): Promise<IReturnMany<ITodo>> {
+    return this.todoRepo.getMany(params);
   }
 
   @Get(':id')

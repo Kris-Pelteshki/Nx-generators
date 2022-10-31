@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { IReturnMany } from '@<%= workspace %>/utils-domain-design';
+import { BaseQueryParams, IReturnMany } from '@<%= workspace %>/utils-domain-design';
 import { PrismaService } from '@<%= workspace %>/prisma';
 import { <%= interfaceName %>, <%= createInterface %>, <%= updateInterface %>, <%= repoInterface %> } from '<%= domainImportPath %>';
 
@@ -13,8 +13,16 @@ export class <%= repoName %> implements <%= repoInterface %> {
     });
   }
 
-  getMany(params?: unknown): Promise<IReturnMany<<%= interfaceName %>>> {
-    throw new Error('Method not implemented.');
+  async getMany(params?: BaseQueryParams): Promise<IReturnMany<<%= interfaceName %>>> {
+    const [count, data] = await Promise.all([
+      this.prisma.<%= prismaClientProperty %>.count(),
+      this.prisma.<%= prismaClientProperty %>.findMany(params),
+    ]);
+
+    return {
+      count,
+      data,
+    };
   }
 
   create(data: <%= createInterface %>): Promise<<%= interfaceName %>> {

@@ -6,8 +6,9 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
-import { IReturnMany } from '@<%= workspace %>/utils-domain-design';
+import { BaseQueryParams, IReturnMany } from '@<%= workspace %>/utils-domain-design';
 import { <%= interfaceName %>, <%= createDto %>, <%= updateDto %>, <%= apiInterface %> } from '<%= domainImportPath %>';
 import { <%= repoName %> } from '<%= infraImportPath %>';
 
@@ -15,13 +16,14 @@ import { <%= repoName %> } from '<%= infraImportPath %>';
 export class <%= className %>Controller implements <%= apiInterface %> {
   constructor(private readonly <%= propertyName %>Repo: <%= repoName %>) {}
 
-  getMany(params?: unknown): Promise<IReturnMany<<%= interfaceName %>>> {
-    throw new Error('Method not implemented.');
-  }
-
   @Get(':id')
   getOne(@Param('id') id: string): Promise<<%= interfaceName %>> {
     return this.<%= propertyName %>Repo.getOne(id);
+  }
+
+  @Get()
+  getMany(@Query() params?: BaseQueryParams): Promise<IReturnMany<<%= interfaceName %>>> {
+    return this.<%= propertyName %>Repo.getMany(params);
   }
 
   @Post()
