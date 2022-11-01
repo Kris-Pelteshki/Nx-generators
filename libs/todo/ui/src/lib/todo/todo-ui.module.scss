@@ -1,0 +1,13 @@
+.container {
+  width: 100%;
+  padding: var(--size-3);
+
+  border-radius: var(--size-2);
+  box-shadow: var(--shadow-3);
+  background: var(--indigo-9);
+
+  transition: background 200ms;
+  &:hover {
+    background: var(--indigo-7);
+  }
+}

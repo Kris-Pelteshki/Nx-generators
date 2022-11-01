@@ -16,7 +16,7 @@ import {
 // =================================================
 
 const instance = axios.create({
-  baseURL: 'http://localhost:3333/api/todo',
+  baseURL: 'http://localhost:3333/api/todos',
 });
 
 export class TodoClient implements AxiosApiClient<ITodoApi> {
@@ -25,11 +25,11 @@ export class TodoClient implements AxiosApiClient<ITodoApi> {
   }
 
   getMany(params?: BaseQueryParams): AxiosPromise<IReturnMany<ITodo>> {
-    return instance.get('/', { params });
+    return instance.get('', { params });
   }
 
   create(data: ICreateTodoDto): AxiosPromise<ITodo> {
-    return instance.post(`/`, data);
+    return instance.post(``, data);
   }
 
   update(data: IUpdateTodoDto): AxiosPromise<ITodo> {

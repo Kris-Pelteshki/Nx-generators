@@ -21,6 +21,7 @@
       "@nx-repo/todo/data-access": ["libs/todo/data-access/src/index.ts"],
       "@nx-repo/todo/domain": ["libs/todo/domain/src/index.ts"],
       "@nx-repo/todo/infrastructure": ["libs/todo/infrastructure/src/index.ts"],
+      "@nx-repo/todo/ui": ["libs/todo/ui/src/index.ts"],
       "@nx-repo/users-data-access": ["libs/users/data-access/src/index.ts"],
       "@nx-repo/users/domain": ["libs/users/domain/src/index.ts"],
       "@nx-repo/users/infrastructure": [

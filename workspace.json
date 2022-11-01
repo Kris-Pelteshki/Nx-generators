@@ -10,6 +10,7 @@
     "todo-data-access": "libs/todo/data-access",
     "todo-domain": "libs/todo/domain",
     "todo-infrastructure": "libs/todo/infrastructure",
+    "todo-ui": "libs/todo/ui",
     "users-data-access": "libs/users/data-access",
     "users-domain": "libs/users/domain",
     "users-infrastructure": "libs/users/infrastructure",

@@ -7,7 +7,7 @@ import { <%= interfaceName %>, <%= createInterface %>, <%= updateInterface %>, <
 // =================================================
 
 const instance = axios.create({
-  baseURL: 'http://localhost:3333/api/<%= fileName %>',
+  baseURL: 'http://localhost:3333/api/<%= fileName %>s',
 });
 
 export class <%= className %>Client implements AxiosApiClient<<%= apiInterface %>> {
@@ -16,11 +16,11 @@ export class <%= className %>Client implements AxiosApiClient<<%= apiInterface %
   }
 
   getMany(params?: BaseQueryParams): AxiosPromise<IReturnMany<<%= interfaceName %>>> {
-    return instance.get('/', { params });
+    return instance.get('', { params });
   }
 
   create(data: <%= createInterface %>): AxiosPromise<<%= interfaceName %>> {
-    return instance.post(`/`, data);
+    return instance.post(``, data);
   }
 
   update(data: <%= updateInterface %>): AxiosPromise<<%= interfaceName %>> {
