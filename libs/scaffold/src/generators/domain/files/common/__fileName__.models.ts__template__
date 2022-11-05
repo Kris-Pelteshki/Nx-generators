@@ -9,8 +9,10 @@ export class <%= createDto %> {
   // TODO: define properties
 }
 
-export class <%= updateDto %> {
+export class <%= updateDto %> extends PartialType(<%= createDto %>) {
+  @IsString()
   id!: string;
 
-  // TODO: define properties
+  // @IsNumber()
+  // id!: number;
 }

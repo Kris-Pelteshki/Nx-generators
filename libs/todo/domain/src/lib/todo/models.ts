@@ -1,3 +1,4 @@
+import { PartialType } from '@nestjs/mapped-types';
 import { Todo } from '@prisma/client';
 import { IsString, IsOptional, IsBoolean } from 'class-validator';
 
@@ -17,15 +18,7 @@ export class CreateTodoDto {
   done?: boolean;
 }
 
-export class UpdateTodoDto {
+export class UpdateTodoDto extends PartialType(CreateTodoDto) {
   @IsString()
   id!: string;
-
-  @IsOptional()
-  @IsString()
-  title?: string;
-
-  @IsOptional()
-  @IsBoolean()
-  done?: boolean;
 }
