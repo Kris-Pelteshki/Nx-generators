@@ -20,7 +20,7 @@ export class <%= className %>Client implements AxiosApiClient<<%= apiInterface %
   }
 
   create(data: <%= createInterface %>): AxiosPromise<<%= interfaceName %>> {
-    return instance.post(``, data);
+    return instance.post('', data);
   }
 
   update(data: <%= updateInterface %>): AxiosPromise<<%= interfaceName %>> {
