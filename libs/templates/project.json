@@ -1,4 +1,5 @@
 {
+  "name": "templates",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/templates/src",
   "projectType": "library",
@@ -13,7 +14,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/templates"],
+      "outputs": ["{workspaceRoot}/coverage/libs/templates"],
       "options": {
         "jestConfig": "libs/templates/jest.config.ts",
         "passWithNoTests": true

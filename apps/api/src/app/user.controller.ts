@@ -8,7 +8,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { BaseQueryParams, IReturnMany } from '@nx-repo/utils-domain-design';
+import { BaseQueryParams, ReturnMany } from '@nx-repo/utils-domain-design';
 import {
   IUser,
   CreateUserDto,
@@ -27,7 +27,7 @@ export class UserController implements IUserApi {
   }
 
   @Get()
-  getMany(@Query() params?: BaseQueryParams): Promise<IReturnMany<IUser>> {
+  getMany(@Query() params?: BaseQueryParams): Promise<ReturnMany<IUser>> {
     return this.userRepo.getMany(params);
   }
 

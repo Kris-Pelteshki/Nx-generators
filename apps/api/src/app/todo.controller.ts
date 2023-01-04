@@ -9,7 +9,7 @@ import {
   Query,
   ValidationPipe,
 } from '@nestjs/common';
-import { BaseQueryParams, IReturnMany } from '@nx-repo/utils-domain-design';
+import { BaseQueryParams, ReturnMany } from '@nx-repo/utils-domain-design';
 import {
   ITodo,
   CreateTodoDto,
@@ -23,7 +23,7 @@ export class TodoController implements ITodoApi {
   constructor(private readonly todoRepo: TodoRepo) {}
 
   @Get()
-  getMany(@Query() params?: BaseQueryParams): Promise<IReturnMany<ITodo>> {
+  getMany(@Query() params?: BaseQueryParams): Promise<ReturnMany<ITodo>> {
     return this.todoRepo.getMany(params);
   }
 

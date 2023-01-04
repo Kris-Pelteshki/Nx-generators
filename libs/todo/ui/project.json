@@ -1,4 +1,5 @@
 {
+  "name": "todo-ui",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/todo/ui/src",
   "projectType": "library",
@@ -13,7 +14,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/todo/ui"],
+      "outputs": ["{workspaceRoot}/coverage/libs/todo/ui"],
       "options": {
         "jestConfig": "libs/todo/ui/jest.config.ts",
         "passWithNoTests": true
