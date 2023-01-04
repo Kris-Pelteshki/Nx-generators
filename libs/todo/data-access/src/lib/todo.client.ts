@@ -3,7 +3,7 @@ import {
   BaseQueryParams,
   ReturnMany,
   AxiosApiClient,
-} from '@nx-repo/utils-domain-design';
+} from '@nx-repo/utils/domain';
 import {
   ITodo,
   ICreateTodoDto,

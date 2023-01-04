@@ -27,7 +27,7 @@
       "@nx-repo/users/infrastructure": [
         "libs/users/infrastructure/src/index.ts"
       ],
-      "@nx-repo/utils-domain-design": ["libs/utils/domain-design/src/index.ts"]
+      "@nx-repo/utils/domain": ["libs/utils/domain/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

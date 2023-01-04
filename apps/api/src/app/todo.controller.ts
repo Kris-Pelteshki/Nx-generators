@@ -7,9 +7,8 @@ import {
   Patch,
   Post,
   Query,
-  ValidationPipe,
 } from '@nestjs/common';
-import { BaseQueryParams, ReturnMany } from '@nx-repo/utils-domain-design';
+import { BaseQueryParams, ReturnMany } from '@nx-repo/utils/domain';
 import {
   ITodo,
   CreateTodoDto,

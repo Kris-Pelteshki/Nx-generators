@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'utils-domain-design',
+  displayName: 'utils-domain',
   preset: '../../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -12,5 +12,5 @@ export default {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../../coverage/libs/utils/domain-design',
+  coverageDirectory: '../../../coverage/libs/utils/domain',
 };

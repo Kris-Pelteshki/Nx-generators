@@ -1,4 +1,4 @@
-import { BaseQueryParams, ReturnMany } from '@<%= workspace %>/utils-domain-design';
+import { BaseQueryParams, ReturnMany } from '@<%= workspace %>/utils/domain';
 import { <%= interfaceName %>, <%= createInterface %>, <%= updateInterface %> } from './<%= fileName %>.models';
 
 export type <%= apiInterface %> = {

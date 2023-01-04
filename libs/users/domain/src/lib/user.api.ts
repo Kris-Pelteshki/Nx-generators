@@ -1,4 +1,4 @@
-import { BaseQueryParams, ReturnMany } from '@nx-repo/utils-domain-design';
+import { BaseQueryParams, ReturnMany } from '@nx-repo/utils/domain';
 import { IUser, ICreateUserDto, IUpdateUserDto } from './user.models';
 
 export type IUserApi = {

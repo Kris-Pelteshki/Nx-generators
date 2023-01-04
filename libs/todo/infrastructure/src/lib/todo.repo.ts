@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { BaseQueryParams, ReturnMany } from '@nx-repo/utils-domain-design';
+import { BaseQueryParams, ReturnMany } from '@nx-repo/utils/domain';
 import { PrismaService } from '@nx-repo/prisma';
 import {
   ITodo,

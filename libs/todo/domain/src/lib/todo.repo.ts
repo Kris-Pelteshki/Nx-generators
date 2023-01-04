@@ -1,4 +1,4 @@
-import { Repo } from '@nx-repo/utils-domain-design';
+import { Repo } from '@nx-repo/utils/domain';
 import { ITodo, ICreateTodoDto, IUpdateTodoDto } from './todo.models';
 
 export interface ITodoRepo

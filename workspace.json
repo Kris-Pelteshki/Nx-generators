@@ -14,7 +14,7 @@
     "users-data-access": "libs/users/data-access",
     "users-domain": "libs/users/domain",
     "users-infrastructure": "libs/users/infrastructure",
-    "utils-domain-design": "libs/utils/domain-design",
+    "utils-domain": "libs/utils/domain",
     "web": "apps/web",
     "web-e2e": "apps/web-e2e"
   }

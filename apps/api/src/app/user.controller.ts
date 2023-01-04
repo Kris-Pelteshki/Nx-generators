@@ -8,7 +8,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { BaseQueryParams, ReturnMany } from '@nx-repo/utils-domain-design';
+import { BaseQueryParams, ReturnMany } from '@nx-repo/utils/domain';
 import {
   IUser,
   CreateUserDto,

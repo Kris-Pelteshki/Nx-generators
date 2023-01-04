@@ -1,4 +1,4 @@
-import { Repo } from '@nx-repo/utils-domain-design';
+import { Repo } from '@nx-repo/utils/domain';
 import { IUser, ICreateUserDto, IUpdateUserDto } from './user.models';
 
 export interface IUserRepo

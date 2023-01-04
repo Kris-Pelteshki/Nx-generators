@@ -1,21 +1,21 @@
 {
-  "name": "utils-domain-design",
+  "name": "utils-domain",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/utils/domain-design/src",
+  "sourceRoot": "libs/utils/domain/src",
   "projectType": "library",
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/utils/domain-design/**/*.ts"]
+        "lintFilePatterns": ["libs/utils/domain/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/libs/utils/domain-design"],
+      "outputs": ["{workspaceRoot}/coverage/libs/utils/domain"],
       "options": {
-        "jestConfig": "libs/utils/domain-design/jest.config.ts",
+        "jestConfig": "libs/utils/domain/jest.config.ts",
         "passWithNoTests": true
       }
     }

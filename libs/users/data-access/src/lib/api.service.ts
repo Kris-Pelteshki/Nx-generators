@@ -3,7 +3,7 @@ import {
   ReturnMany,
   AxiosApiClient,
   BaseQueryParams,
-} from '@nx-repo/utils-domain-design';
+} from '@nx-repo/utils/domain';
 import {
   ICreateUserDto,
   IUpdateUserDto,
