@@ -1,7 +1,7 @@
 import axios, { AxiosPromise } from 'axios';
 import {
   BaseQueryParams,
-  IReturnMany,
+  ReturnMany,
   AxiosApiClient,
 } from '@nx-repo/utils-domain-design';
 import {
@@ -24,7 +24,7 @@ export class TodoClient implements AxiosApiClient<ITodoApi> {
     return instance.get(`/${id}`);
   }
 
-  getMany(params?: BaseQueryParams): AxiosPromise<IReturnMany<ITodo>> {
+  getMany(params?: BaseQueryParams): AxiosPromise<ReturnMany<ITodo>> {
     return instance.get('', { params });
   }
 

@@ -1,3 +1,4 @@
+import { PartialType } from '@nestjs/mapped-types';
 import { <%= prismaModel %> } from '@prisma/client';
 import { IsString, IsOptional } from 'class-validator';
 
@@ -6,13 +7,13 @@ export type <%= createInterface %> = <%= createDto %>;
 export type <%= updateInterface %> = <%= updateDto %>;
 
 export class <%= createDto %> {
-  // TODO: define properties
+  // TODO: define entity properties
 }
 
 export class <%= updateDto %> extends PartialType(<%= createDto %>) {
-  @IsString()
-  id!: string;
+  @IsNumber()
+  id!: number;
 
-  // @IsNumber()
-  // id!: number;
+  // @IsString()
+  // id!: string;
 }

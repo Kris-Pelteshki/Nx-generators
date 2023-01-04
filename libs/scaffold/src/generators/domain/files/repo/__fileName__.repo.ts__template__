@@ -1,4 +1,6 @@
-import { IRepo } from '@<%= workspace %>/utils-domain-design';
-import { <%= interfaceName %> } from './<%= fileName %>.models';
+import { Repo } from '@<%= workspace %>/utils-domain-design';
+import { <%= interfaceName %>, <%= createInterface %>, <%= updateInterface %> } from './<%= fileName %>.models';
 
-export interface <%= repoInterface %> extends IRepo<<%= interfaceName %>> {}
+export interface <%= repoInterface %> extends Repo<<%= interfaceName %>, <%= createInterface %>, <%= updateInterface %>> {
+  // Add your additional methods here
+}

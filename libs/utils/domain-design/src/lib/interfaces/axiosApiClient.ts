@@ -9,7 +9,7 @@ import { AxiosPromise } from 'axios';
  * @see [Typescript mapped types](https://www.typescriptlang.org/docs/handbook/2/mapped-types.html)
  */
 export type AxiosApiClient<
-  Type extends Record<string, (...args: any[]) => Promise<unknown>>
+  Type extends Record<string, (...args: unknown[]) => Promise<unknown>>
 > = {
   [Prop in keyof Type]: (
     ...args: Parameters<Type[Prop]>

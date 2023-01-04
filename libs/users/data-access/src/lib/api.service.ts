@@ -1,6 +1,6 @@
 import axios, { AxiosPromise } from 'axios';
 import {
-  IReturnMany,
+  ReturnMany,
   AxiosApiClient,
   BaseQueryParams,
 } from '@nx-repo/utils-domain-design';
@@ -20,7 +20,7 @@ class UsersApiClient implements AxiosApiClient<IUserApi> {
     return instance.get(`/${id}`);
   }
 
-  getMany(params?: BaseQueryParams): AxiosPromise<IReturnMany<User>> {
+  getMany(params?: BaseQueryParams): AxiosPromise<ReturnMany<User>> {
     return instance.get('/', { params });
   }
 

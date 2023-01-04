@@ -1,5 +1,5 @@
 import axios, { AxiosPromise } from 'axios';
-import { BaseQueryParams, IReturnMany, AxiosApiClient } from '@<%= workspace %>/utils-domain-design';
+import { BaseQueryParams, ReturnMany, AxiosApiClient } from '@<%= workspace %>/utils-domain-design';
 import { <%= interfaceName %>, <%= createInterface %>, <%= updateInterface %>, <%= apiInterface %> } from '<%= domainImportPath %>';
 
 // =================================================
@@ -15,7 +15,7 @@ export class <%= className %>Client implements AxiosApiClient<<%= apiInterface %
     return instance.get(`/${id}`);
   }
 
-  getMany(params?: BaseQueryParams): AxiosPromise<IReturnMany<<%= interfaceName %>>> {
+  getMany(params?: BaseQueryParams): AxiosPromise<ReturnMany<<%= interfaceName %>>> {
     return instance.get('', { params });
   }
 

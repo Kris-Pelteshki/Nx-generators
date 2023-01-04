@@ -8,7 +8,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { BaseQueryParams, IReturnMany } from '@<%= workspace %>/utils-domain-design';
+import { BaseQueryParams, ReturnMany } from '@<%= workspace %>/utils-domain-design';
 import { <%= interfaceName %>, <%= createDto %>, <%= updateDto %>, <%= apiInterface %> } from '<%= domainImportPath %>';
 import { <%= repoName %> } from '<%= infraImportPath %>';
 
@@ -22,7 +22,7 @@ export class <%= className %>Controller implements <%= apiInterface %> {
   }
 
   @Get()
-  getMany(@Query() params?: BaseQueryParams): Promise<IReturnMany<<%= interfaceName %>>> {
+  getMany(@Query() params?: BaseQueryParams): Promise<ReturnMany<<%= interfaceName %>>> {
     return this.<%= propertyName %>Repo.getMany(params);
   }
 

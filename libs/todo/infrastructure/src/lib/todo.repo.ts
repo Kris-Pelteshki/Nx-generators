@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { BaseQueryParams, IReturnMany } from '@nx-repo/utils-domain-design';
+import { BaseQueryParams, ReturnMany } from '@nx-repo/utils-domain-design';
 import { PrismaService } from '@nx-repo/prisma';
 import {
   ITodo,
@@ -18,7 +18,7 @@ export class TodoRepo implements ITodoRepo {
     });
   }
 
-  async getMany(params?: BaseQueryParams): Promise<IReturnMany<ITodo>> {
+  async getMany(params?: BaseQueryParams): Promise<ReturnMany<ITodo>> {
     const [count, data] = await Promise.all([
       this.prisma.todo.count(),
       this.prisma.todo.findMany(params),

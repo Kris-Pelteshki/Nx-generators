@@ -1,4 +1,5 @@
-import { IRepo } from '@nx-repo/utils-domain-design';
-import { IUser } from './user.models';
+import { Repo } from '@nx-repo/utils-domain-design';
+import { IUser, ICreateUserDto, IUpdateUserDto } from './user.models';
 
-export interface IUserRepo extends IRepo<IUser> {}
+export interface IUserRepo
+  extends Repo<IUser, ICreateUserDto, IUpdateUserDto, string> {}

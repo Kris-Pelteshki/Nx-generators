@@ -1,4 +1,4 @@
-import { BaseQueryParams, IReturnMany } from '@<%= workspace %>/utils-domain-design';
+import { BaseQueryParams, ReturnMany } from '@<%= workspace %>/utils-domain-design';
 import { <%= interfaceName %>, <%= createInterface %>, <%= updateInterface %>, <%= apiInterface %> } from '<%= domainImportPath %>';
 
 // =================================================
@@ -13,7 +13,7 @@ export class <%= className %>Client implements <%= apiInterface %> {
     return res.json();
   }
 
-  async getMany(params?: BaseQueryParams): Promise<IReturnMany<<%= interfaceName %>>> {
+  async getMany(params?: BaseQueryParams): Promise<ReturnMany<<%= interfaceName %>>> {
     const searchParams = new URLSearchParams(params as any);
     const res = await fetch(`${baseURL}?${searchParams}`);
     return res.json();
