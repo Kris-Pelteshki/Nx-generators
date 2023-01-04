@@ -44,6 +44,12 @@
       "enum": ["axios", "fetch"],
       "default": "axios"
     },
+    "idType": {
+      "type": "string",
+      "description": "The type of the id field.",
+      "enum": ["number", "string"],
+      "default": "number"
+    },
     "linter": {
       "description": "The tool to use for running lint checks.",
       "type": "string",
