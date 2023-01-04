@@ -11,7 +11,7 @@ const instance = axios.create({
 });
 
 export class <%= className %>Client implements AxiosApiClient<<%= apiInterface %>> {
-  getOne(id: string): AxiosPromise<<%= interfaceName %>> {
+  getOne(id: <%= idType %>): AxiosPromise<<%= interfaceName %>> {
     return instance.get(`/${id}`);
   }
 
@@ -27,7 +27,7 @@ export class <%= className %>Client implements AxiosApiClient<<%= apiInterface %
     return instance.patch(`/${data.id}`, data);
   }
 
-  delete(id: string): AxiosPromise<<%= interfaceName %>> {
+  delete(id: <%= idType %>): AxiosPromise<<%= interfaceName %>> {
     return instance.delete(`/${id}`);
   }
 }

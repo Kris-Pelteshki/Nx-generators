@@ -6,7 +6,7 @@
     "infrastructure": {
       "factory": "./src/generators/infrastructure/generator",
       "schema": "./src/generators/infrastructure/schema.json",
-      "description": "infrastructure generator"
+      "description": "Creates an infrastructure library"
     },
     "apiClient": {
       "factory": "./src/generators/api-client/generator",
@@ -16,7 +16,7 @@
     "controller": {
       "factory": "./src/generators/controller/generator",
       "schema": "./src/generators/controller/schema.json",
-      "description": "controller generator"
+      "description": "Creates a controller"
     },
     "repository": {
       "factory": "./src/generators/repository/generator",
@@ -26,7 +26,7 @@
     "domain": {
       "factory": "./src/generators/domain/generator",
       "schema": "./src/generators/domain/schema.json",
-      "description": "Creates a domain library template."
+      "description": "Creates files in an already existing domain library"
     },
     "domain-lib": {
       "factory": "./src/generators/domain-lib/generator",

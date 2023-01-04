@@ -4,5 +4,6 @@ export interface ControllerGeneratorSchema {
   domainProject: string;
   infrastructureProject: string;
   directory?: string;
+  idType?: string;
   skipFormat?: boolean;
 }

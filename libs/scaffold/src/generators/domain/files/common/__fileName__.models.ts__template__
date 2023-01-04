@@ -11,9 +11,12 @@ export class <%= createDto %> {
 }
 
 export class <%= updateDto %> extends PartialType(<%= createDto %>) {
-  @IsNumber()
-  id!: number;
 
-  // @IsString()
-  // id!: string;
+  <% if (idType === 'number') { %>
+    @IsNumber()
+    id!: number;
+  <% } else { %>
+    @IsString()
+    id!: string;
+  <% } %>
 }

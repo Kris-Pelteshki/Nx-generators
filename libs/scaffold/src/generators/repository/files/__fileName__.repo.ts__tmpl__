@@ -7,7 +7,7 @@ import { <%= interfaceName %>, <%= createInterface %>, <%= updateInterface %>, <
 export class <%= repoName %> implements <%= repoInterface %> {
   constructor(private readonly prisma: PrismaService) {}
 
-  getOne(id: string): Promise<<%= interfaceName %> | null> {
+  getOne(id: <%= idType %>): Promise<<%= interfaceName %> | null> {
     return this.prisma.<%= prismaClientProperty %>.findUnique({
       where: { id },
     });
@@ -40,7 +40,7 @@ export class <%= repoName %> implements <%= repoInterface %> {
     });
   }
 
-  delete(id: string): Promise<<%= interfaceName %>> {
+  delete(id: <%= idType %>): Promise<<%= interfaceName %>> {
     return this.prisma.<%= prismaClientProperty %>.delete({
       where: { id },
     });

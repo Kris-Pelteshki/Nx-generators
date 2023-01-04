@@ -17,7 +17,7 @@ export class <%= className %>Controller implements <%= apiInterface %> {
   constructor(private readonly <%= propertyName %>Repo: <%= repoName %>) {}
 
   @Get(':id')
-  getOne(@Param('id') id: string): Promise<<%= interfaceName %>> {
+  getOne(@Param('id') id: <%= idType %>): Promise<<%= interfaceName %>> {
     return this.<%= propertyName %>Repo.getOne(id);
   }
 
@@ -37,7 +37,7 @@ export class <%= className %>Controller implements <%= apiInterface %> {
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string): Promise<<%= interfaceName %>> {
+  delete(@Param('id') id: <%= idType %>): Promise<<%= interfaceName %>> {
     return this.<%= propertyName %>Repo.delete(id);
   }
 }

@@ -29,13 +29,19 @@
     },
     "addRepoInterface": {
       "type": "boolean",
-      "description": "Add a repository interface that extends IRepo<>.",
+      "description": "Add a repository interface that extends Repo<>.",
       "default": true
     },
     "addApiInterface": {
       "type": "boolean",
       "description": "Add an API interface that extends IAPI<>. To be used as the interface for the controller and the front-end api client.",
       "default": true
+    },
+    "idType": {
+      "type": "string",
+      "description": "The type of the id field.",
+      "enum": ["number", "string"],
+      "default": "number"
     },
     "skipFormat": {
       "type": "boolean",

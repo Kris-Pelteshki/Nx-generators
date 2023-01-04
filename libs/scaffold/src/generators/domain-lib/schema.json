@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "$id": "DomainLib",
+  "$id": "DomainLib-id",
   "title": "Domain Lib",
   "description": "Create a domain library.",
   "cli": "nx",
@@ -38,6 +38,12 @@
       "type": "boolean",
       "description": "Add an API interface that extends IAPI<>. To be used as the interface for the controller and the front-end api client.",
       "default": true
+    },
+    "idType": {
+      "type": "string",
+      "description": "The type of the id field.",
+      "enum": ["number", "string"],
+      "default": "number"
     },
     "linter": {
       "description": "The tool to use for running lint checks.",

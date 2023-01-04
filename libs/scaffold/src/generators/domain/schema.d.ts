@@ -4,5 +4,6 @@ interface DomainGeneratorSchema {
   directory?: string;
   addRepoInterface?: boolean;
   addApiInterface?: boolean;
+  idType?: string;
   skipFormat?: boolean;
 }

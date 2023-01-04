@@ -1,10 +1,11 @@
 # scaffold
 
-This library was generated with [Nx](https://nx.dev).
+---
 
-## Building
+## TODO
 
-Run `nx build scaffold` to build the library.
+- [ ] add "vitest" option support
+- [ ] add a generator for creating a domain, infra, data-access, ui libs at once
 
 ## Running unit tests
 

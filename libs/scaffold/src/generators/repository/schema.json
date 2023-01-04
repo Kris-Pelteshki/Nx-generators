@@ -36,6 +36,12 @@
       "description": "Directory where the generated files are placed.",
       "aliases": ["dir", "path"]
     },
+    "idType": {
+      "type": "string",
+      "description": "The type of the id field.",
+      "enum": ["number", "string"],
+      "default": "number"
+    },
     "unitTestRunner": {
       "description": "Test runner to use for unit tests.",
       "type": "string",

@@ -2,9 +2,9 @@ import { BaseQueryParams, ReturnMany } from '@<%= workspace %>/utils/domain';
 import { <%= interfaceName %>, <%= createInterface %>, <%= updateInterface %> } from './<%= fileName %>.models';
 
 export type <%= apiInterface %> = {
-  getOne(id: string): Promise<<%= interfaceName %>>;
+  getOne(id: <%= idType %>): Promise<<%= interfaceName %>>;
   getMany(params?: BaseQueryParams): Promise<ReturnMany<<%= interfaceName %>>>;
   create(data: <%= createInterface %>): Promise<<%= interfaceName %>>;
   update(data: <%= updateInterface %>): Promise<<%= interfaceName %>>;
-  delete(id: string): Promise<<%= interfaceName %>>;
+  delete(id: <%= idType %>): Promise<<%= interfaceName %>>;
 }

@@ -45,6 +45,12 @@
       "description": "The directory where the generated files are placed.",
       "aliases": ["dir", "path"]
     },
+    "idType": {
+      "type": "string",
+      "description": "The type of the id field.",
+      "default": "number",
+      "enum": ["number", "string"]
+    },
     "skipFormat": {
       "type": "boolean",
       "description": "Skip formatting files.",

@@ -4,5 +4,6 @@ interface ApiClientGeneratorSchema {
   domainProject: string;
   directory?: string;
   clientType: 'axios' | 'fetch';
+  idType?: string;
   skipFormat?: boolean;
 }

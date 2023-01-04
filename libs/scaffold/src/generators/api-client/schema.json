@@ -42,6 +42,12 @@
       "enum": ["axios", "fetch"],
       "default": "axios"
     },
+    "idType": {
+      "type": "string",
+      "description": "The type of the id field.",
+      "enum": ["number", "string"],
+      "default": "number"
+    },
     "skipFormat": {
       "type": "boolean",
       "description": "Skip formatting files.",
