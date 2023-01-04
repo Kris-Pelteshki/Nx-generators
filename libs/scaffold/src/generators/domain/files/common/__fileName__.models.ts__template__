@@ -1,6 +1,6 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { <%= prismaModel %> } from '@prisma/client';
-import { IsString, IsOptional } from 'class-validator';
+import { IsNumber, IsString, IsOptional } from 'class-validator';
 
 export type <%= interfaceName %> = <%= prismaModel %>;
 export type <%= createInterface %> = <%= createDto %>;

@@ -1,5 +1,5 @@
 import { BaseQueryParams, ReturnMany } from '@nx-repo/utils-domain-design';
-import { ITodo, ICreateTodoDto, IUpdateTodoDto } from './models';
+import { ITodo, ICreateTodoDto, IUpdateTodoDto } from './todo.models';
 
 export type ITodoApi = {
   getOne(id: string): Promise<ITodo>;
