@@ -10,34 +10,34 @@ import {
 } from '@nestjs/common';
 import { BaseQueryParams, ReturnMany } from '@<%= workspace %>/utils/domain';
 import { <%= interfaceName %>, <%= createDto %>, <%= updateDto %>, <%= apiInterface %> } from '<%= domainImportPath %>';
-import { <%= repoName %> } from '<%= infraImportPath %>';
+import { <%= repoName %> } from '<%= repoImportPath %>';
 
 @Controller('<%= fileName %>s')
 export class <%= className %>Controller implements <%= apiInterface %> {
-  constructor(private readonly <%= propertyName %>Repo: <%= repoName %>) {}
+  constructor(private readonly <%= repoPropertyName %>: <%= repoName %>) {}
 
   @Get(':id')
-  getOne(@Param('id') id: <%= idType %>): Promise<<%= interfaceName %>> {
-    return this.<%= propertyName %>Repo.getOne(id);
+  getOne(@Param('id') id: <%= idType %>): Promise<<%= interfaceName %> | null> {
+    return this.<%= repoPropertyName %>.getOne(id);
   }
 
   @Get()
   getMany(@Query() params?: BaseQueryParams): Promise<ReturnMany<<%= interfaceName %>>> {
-    return this.<%= propertyName %>Repo.getMany(params);
+    return this.<%= repoPropertyName %>.getMany(params);
   }
 
   @Post()
   create(@Body() data: <%= createDto %>): Promise<<%= interfaceName %>> {
-    return this.<%= propertyName %>Repo.create(data);
+    return this.<%= repoPropertyName %>.create(data);
   }
 
   @Patch(':id')
   update(@Body() data: <%= updateDto %>): Promise<<%= interfaceName %>> {
-    return this.<%= propertyName %>Repo.update(data);
+    return this.<%= repoPropertyName %>.update(data);
   }
 
   @Delete(':id')
   delete(@Param('id') id: <%= idType %>): Promise<<%= interfaceName %>> {
-    return this.<%= propertyName %>Repo.delete(id);
+    return this.<%= repoPropertyName %>.delete(id);
   }
 }

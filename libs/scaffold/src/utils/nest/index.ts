@@ -21,6 +21,11 @@ export const addToModuleDecorator: AddToModuleDecoratorFn =
       );
     }
 
+    const alreadyHasContent = node.getText()?.includes(contentToInsert);
+    if (alreadyHasContent) {
+      return;
+    }
+
     const hasItems = node.getChildCount() > 0;
     const position = node.end - 1;
     const content = hasItems ? `, ${contentToInsert}` : contentToInsert;

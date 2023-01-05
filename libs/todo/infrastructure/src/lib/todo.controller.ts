@@ -15,20 +15,20 @@ import {
   UpdateTodoDto,
   ITodoApi,
 } from '@nx-repo/todo/domain';
-import { TodoRepo } from '@nx-repo/todo/infrastructure';
+import { TodoRepo } from './todo.repo';
 
 @Controller('todos')
 export class TodoController implements ITodoApi {
   constructor(private readonly todoRepo: TodoRepo) {}
 
+  @Get(':id')
+  getOne(@Param('id') id: string): Promise<ITodo | null> {
+    return this.todoRepo.getOne(id);
+  }
+
   @Get()
   getMany(@Query() params?: BaseQueryParams): Promise<ReturnMany<ITodo>> {
     return this.todoRepo.getMany(params);
-  }
-
-  @Get(':id')
-  getOne(@Param('id') id: string): Promise<ITodo> {
-    return this.todoRepo.getOne(id);
   }
 
   @Post()

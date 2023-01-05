@@ -2,8 +2,8 @@ import {
   Tree,
   getWorkspaceLayout,
   readProjectConfiguration,
+  getImportPath,
 } from '@nrwl/devkit';
-import path = require('path');
 
 /**
  * Get the project import path for a project
@@ -11,12 +11,11 @@ import path = require('path');
 export function getTsPath(tree: Tree, projectName: string) {
   // TODO: read the path from base ts config file
   const { npmScope, libsDir } = getWorkspaceLayout(tree);
+  let { root: projectDirectory } = readProjectConfiguration(tree, projectName);
 
-  let { root } = readProjectConfiguration(tree, projectName);
+  projectDirectory = projectDirectory.replace(`${libsDir}/`, '');
 
-  root = root.replace(`${libsDir}/`, '');
-
-  return `@${npmScope}/${root}`;
+  return getImportPath(npmScope, projectDirectory);
 }
 
 export function getFolderPath(
@@ -58,6 +57,41 @@ export function getExportStatement(
   );
 
   return `export * from '${filePath}';`;
+}
+
+/**
+ * Recursively searches for a matching file name in a directory.
+ *
+ * ```ts
+ *  getFilePath(tree, 'libs/my-lib', 'my-file.ts');
+ * ```
+ */
+export function getFilePath(
+  tree: Tree,
+  directory: string,
+  fileName: string | RegExp
+): string | undefined {
+  const files = tree.children(directory);
+
+  function getMatch(file: string): string | null {
+    return file.match(fileName)?.[0];
+  }
+
+  for (const file of files) {
+    if (getMatch(file)) {
+      return `${directory}/${file}`;
+    }
+
+    if (!tree.isFile(`${directory}/${file}`)) {
+      const filePath = getFilePath(tree, `${directory}/${file}`, fileName);
+
+      if (filePath) {
+        return filePath;
+      }
+    }
+  }
+
+  return undefined;
 }
 
 /**

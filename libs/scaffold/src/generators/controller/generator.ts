@@ -3,7 +3,6 @@ import {
   generateFiles,
   getWorkspaceLayout,
   names,
-  offsetFromRoot,
   readProjectConfiguration,
   Tree,
 } from '@nrwl/devkit';
@@ -11,10 +10,11 @@ import * as path from 'path';
 import {
   BarrelUpdater,
   ExportsBuilder,
-  getClosestPath,
+  getFilePath,
   getFolderPath,
   getTsPath,
   interfaceNames,
+  SourceFileHelper,
 } from '../../utils';
 import { addControllerToModule, addProviderToModule } from '../../utils/nest';
 import { ControllerGeneratorSchema } from './schema';
@@ -23,7 +23,7 @@ interface NormalizedSchema extends ControllerGeneratorSchema {
   workspace: string;
   projectRoot: string;
   domainImportPath: string;
-  infraImportPath: string;
+  repoImportPath: string;
   sourceRoot: string;
   folderRoot: string;
   fileName: string;
@@ -39,37 +39,24 @@ function normalizeOptions(
     options.project
   );
 
+  const fileName = names(options.prismaModel).fileName;
   const domainImportPath = getTsPath(tree, options.domainProject);
-  const infraImportPath = getTsPath(tree, options.infrastructureProject);
-
-  const isLib = tree
-    .children(`${projectRoot}/src`)
-    ?.some((child) => child === 'lib');
-
-  const prefix = isLib ? 'lib' : 'app';
-  const folderRoot = getFolderPath(sourceRoot, options.directory, `/${prefix}`);
+  const folderRoot = getFolderPath(sourceRoot, options.directory, '/lib');
+  const repoImportPath = `./${fileName}.repo`;
 
   return {
     ...options,
     workspace: npmScope,
     projectRoot,
     domainImportPath,
-    infraImportPath,
+    repoImportPath,
     sourceRoot,
     folderRoot,
-    fileName: names(options.prismaModel).fileName,
+    fileName,
   };
 }
 
 function updateBarrel(tree: Tree, options: NormalizedSchema) {
-  const isLib = tree
-    .children(`${options.projectRoot}/src`)
-    ?.some((child) => child === 'lib');
-
-  if (!isLib) {
-    return;
-  }
-
   const exports = new ExportsBuilder()
     .directory(options.directory)
     .fileNames([`${options.fileName}.controller`]);
@@ -87,8 +74,6 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     ...options,
     ...names(options.prismaModel),
     ...interfaceNames(options.prismaModel),
-    repoPropertyName: `${names(options.prismaModel).propertyName}Repo`,
-    offsetFromRoot: offsetFromRoot(options.projectRoot),
     template: '',
   };
 
@@ -99,27 +84,26 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     templateOptions
   );
 
-  const appModulePath = getClosestPath(
+  const { sourceRoot: nestRoot } = readProjectConfiguration(
     tree,
-    options.folderRoot,
-    'app.module.ts'
+    options.nestApplication
   );
+  const appModulePath = getFilePath(tree, nestRoot, 'app.module.ts');
 
-  // TODO extract Controller name to utils
-  // TODO: add a check to do this only if you know where to find app module
-  addControllerToModule(
-    tree,
-    appModulePath,
-    `${names(options.prismaModel).className}Controller`
-  );
+  if (appModulePath) {
+    const { className } = names(options.prismaModel);
+    const controllerName = `${className}Controller`;
+    const repoName = `${className}Repo`;
 
-  addProviderToModule(
-    tree,
-    appModulePath,
-    `${names(options.prismaModel).className}Repo`
-  );
+    addControllerToModule(tree, appModulePath, controllerName);
+    addProviderToModule(tree, appModulePath, repoName);
 
-  //TODO:  add imports to files
+    const infraImportPath = getTsPath(tree, options.project);
+    const appModuleFile = new SourceFileHelper(tree, appModulePath);
+
+    appModuleFile.insertfImport(controllerName, infraImportPath);
+    appModuleFile.insertfImport(repoName, infraImportPath);
+  }
 }
 
 export default async function (tree: Tree, options: ControllerGeneratorSchema) {
