@@ -15,14 +15,14 @@ import {
   UpdateUserDto,
   IUserApi,
 } from '@nx-repo/users/domain';
-import { UserRepo } from '@nx-repo/users/infrastructure';
+import { UserRepo } from './user.repo';
 
 @Controller('users')
 export class UserController implements IUserApi {
   constructor(private readonly userRepo: UserRepo) {}
 
   @Get(':id')
-  getOne(@Param('id') id: string): Promise<IUser> {
+  getOne(@Param('id') id: string): Promise<IUser | null> {
     return this.userRepo.getOne(id);
   }
 
