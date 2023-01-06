@@ -7,7 +7,6 @@ import {
 import { libraryGenerator } from '@nrwl/workspace/generators';
 
 import {
-  addProject,
   baseNormalizeOptions,
   deleteFiles,
   toLibraryGeneratorOptions,
@@ -41,7 +40,6 @@ export default async function (
   });
 
   updateTsConfig(tree, options);
-  addProject(tree, options);
 
   if (!options.skipFormat) {
     await formatFiles(tree);
