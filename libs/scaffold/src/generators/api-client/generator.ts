@@ -21,7 +21,7 @@ interface NormalizedSchema extends ApiClientGeneratorSchema {
   sourceRoot: string;
   folderRoot: string;
   domainImportPath: string;
-  workspace: string;
+  npmScope: string;
   fileName: string;
 }
 
@@ -39,7 +39,7 @@ function normalizeOptions(
 
   return {
     ...options,
-    workspace: npmScope,
+    npmScope: npmScope,
     projectRoot,
     sourceRoot,
     folderRoot,

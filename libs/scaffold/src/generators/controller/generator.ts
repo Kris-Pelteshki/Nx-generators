@@ -20,7 +20,7 @@ import { addControllerToModule, addProviderToModule } from '../../utils/nest';
 import { ControllerGeneratorSchema } from './schema';
 
 interface NormalizedSchema extends ControllerGeneratorSchema {
-  workspace: string;
+  npmScope: string;
   projectRoot: string;
   domainImportPath: string;
   repoImportPath: string;
@@ -46,7 +46,7 @@ function normalizeOptions(
 
   return {
     ...options,
-    workspace: npmScope,
+    npmScope: npmScope,
     projectRoot,
     domainImportPath,
     repoImportPath,

@@ -1,5 +1,5 @@
 import axios, { AxiosPromise } from 'axios';
-import { BaseQueryParams, ReturnMany, AxiosApiClient } from '@<%= workspace %>/utils/domain';
+import { BaseQueryParams, ReturnMany, AxiosApiClient } from '@<%= npmScope %>/utils/domain';
 import { <%= interfaceName %>, <%= createInterface %>, <%= updateInterface %>, <%= apiInterface %> } from '<%= domainImportPath %>';
 
 // =================================================

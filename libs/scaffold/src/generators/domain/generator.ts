@@ -1,12 +1,12 @@
 import {
   formatFiles,
   getWorkspaceLayout,
+  joinPathFragments,
   names,
   offsetFromRoot,
   readProjectConfiguration,
   Tree,
 } from '@nrwl/devkit';
-import path = require('path');
 import {
   BarrelUpdater,
   ExportsBuilder,
@@ -19,7 +19,7 @@ interface NormalizedSchema extends DomainGeneratorSchema {
   projectRoot: string;
   sourceRoot: string;
   folderRoot: string;
-  workspace: string;
+  npmScope: string;
   fileName: string;
   prismaClientProperty: string;
 }
@@ -40,7 +40,7 @@ function normalizeOptions(
 
   return {
     ...options,
-    workspace: npmScope,
+    npmScope,
     projectRoot,
     sourceRoot,
     folderRoot,
@@ -79,7 +79,7 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     template: '',
   };
 
-  const getPath = (filePath: string) => path.join(__dirname, filePath);
+  const getPath = (filePath: string) => joinPathFragments(__dirname, filePath);
 
   new GenerateFilesHelper({
     tree,

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { BaseQueryParams, ReturnMany } from '@<%= workspace %>/utils/domain';
-import { PrismaService } from '@<%= workspace %>/prisma';
+import { BaseQueryParams, ReturnMany } from '@<%= npmScope %>/utils/domain';
+import { PrismaService } from '@<%= npmScope %>/prisma';
 import { <%= interfaceName %>, <%= createInterface %>, <%= updateInterface %>, <%= repoInterface %> } from '<%= domainImportPath %>';
 
 @Injectable()

@@ -20,7 +20,7 @@ interface NormalizedSchema extends RepositoryGeneratorSchema {
   projectRoot: string;
   sourceRoot: string;
   folderRoot: string;
-  workspace: string;
+  npmScope: string;
   fileName: string;
   prismaClientProperty: string;
   domainImportPath: string;
@@ -43,7 +43,7 @@ function normalizeOptions(
 
   return {
     ...options,
-    workspace: npmScope,
+    npmScope: npmScope,
     projectRoot,
     sourceRoot,
     folderRoot,

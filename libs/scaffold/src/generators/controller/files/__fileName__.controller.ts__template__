@@ -8,7 +8,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { BaseQueryParams, ReturnMany } from '@<%= workspace %>/utils/domain';
+import { BaseQueryParams, ReturnMany } from '@<%= npmScope %>/utils/domain';
 import { <%= interfaceName %>, <%= createDto %>, <%= updateDto %>, <%= apiInterface %> } from '<%= domainImportPath %>';
 import { <%= repoName %> } from '<%= repoImportPath %>';
 
