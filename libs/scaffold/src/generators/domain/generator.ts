@@ -8,11 +8,10 @@ import {
   Tree,
 } from '@nrwl/devkit';
 import {
-  BarrelUpdater,
-  ExportsBuilder,
   GenerateFilesHelper,
   getFolderPath,
   interfaceNames,
+  updateBarrel,
 } from '../../utils';
 
 interface NormalizedSchema extends DomainGeneratorSchema {
@@ -49,27 +48,6 @@ function normalizeOptions(
   };
 }
 
-function updateBarrel(tree: Tree, options: NormalizedSchema) {
-  const exports = new ExportsBuilder()
-    .directory(options.directory)
-    .fileNames([`${options.fileName}.models`]);
-
-  if (options.addRepoInterface) {
-    exports.addFile(`${options.fileName}.repo`);
-  }
-
-  if (options.addApiInterface) {
-    exports.addFile(`${options.fileName}.api`);
-  }
-
-  new BarrelUpdater({
-    tree,
-    indexPath: `${options.projectRoot}/src/index.ts`,
-  })
-    .add(exports.build())
-    .update();
-}
-
 function addFiles(tree: Tree, options: NormalizedSchema) {
   const templateOptions = {
     ...options,
@@ -99,10 +77,27 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
 }
 
 export default async function (tree: Tree, options: DomainGeneratorSchema) {
-  const normalizedOptions = normalizeOptions(tree, options);
+  const opts = normalizeOptions(tree, options);
+  const { fileName, projectName, directory } = opts;
 
-  addFiles(tree, normalizedOptions);
-  updateBarrel(tree, normalizedOptions);
+  addFiles(tree, opts);
+
+  updateBarrel({
+    tree,
+    projectName,
+    directory,
+    exports: [
+      `${fileName}.models`,
+      {
+        condition: opts.addRepoInterface,
+        import: `${fileName}.repo`,
+      },
+      {
+        condition: opts.addApiInterface,
+        import: `${fileName}.api`,
+      },
+    ],
+  });
 
   if (!options.skipFormat) {
     await formatFiles(tree);

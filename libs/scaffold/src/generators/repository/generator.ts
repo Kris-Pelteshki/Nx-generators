@@ -8,7 +8,6 @@ import {
   readProjectConfiguration,
   Tree,
 } from '@nrwl/devkit';
-import * as path from 'path';
 import {
   interfaceNames,
   updateBarrel,
@@ -66,7 +65,7 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
 
   generateFiles(
     tree,
-    path.join(__dirname, 'files'),
+    joinPathFragments(__dirname, 'files'),
     folderRoot,
     templateOptions
   );
@@ -77,14 +76,16 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
 }
 
 export default async function (tree: Tree, options: RepositoryGeneratorSchema) {
-  const normalizedOptions = normalizeOptions(tree, options);
+  const opts = normalizeOptions(tree, options);
+  const { project, directory } = opts;
 
-  addFiles(tree, normalizedOptions);
+  addFiles(tree, opts);
 
   updateBarrel({
     tree,
-    options: normalizedOptions,
-    exports: [`${normalizedOptions.fileName}.repo`],
+    projectName: project,
+    directory,
+    exports: [`${opts.fileName}.repo`],
   });
 
   if (!options.skipFormat) {

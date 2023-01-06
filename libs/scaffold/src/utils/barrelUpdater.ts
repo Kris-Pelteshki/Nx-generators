@@ -35,5 +35,7 @@ export class BarrelUpdater {
       this._indexPath,
       contentSeparatedByNewLine
     );
+
+    return this;
   }
 }

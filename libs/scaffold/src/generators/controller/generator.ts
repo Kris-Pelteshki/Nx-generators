@@ -2,22 +2,19 @@ import {
   formatFiles,
   generateFiles,
   getWorkspaceLayout,
+  joinPathFragments,
   names,
   readProjectConfiguration,
   Tree,
 } from '@nrwl/devkit';
-import * as path from 'path';
 import {
-  BarrelUpdater,
-  ExportsBuilder,
   getFilePath,
   getFolderPath,
   getTsPath,
   interfaceNames,
-  SourceFileHelper,
+  updateBarrel,
 } from '../../utils';
 import { addControllerToModule, addProviderToModule } from '../../utils/nest';
-import { ControllerGeneratorSchema } from './schema';
 
 interface NormalizedSchema extends ControllerGeneratorSchema {
   npmScope: string;
@@ -56,19 +53,6 @@ function normalizeOptions(
   };
 }
 
-function updateBarrel(tree: Tree, options: NormalizedSchema) {
-  const exports = new ExportsBuilder()
-    .directory(options.directory)
-    .fileNames([`${options.fileName}.controller`]);
-
-  new BarrelUpdater({
-    tree,
-    indexPath: `${options.projectRoot}/src/index.ts`,
-  })
-    .add(exports.build())
-    .update();
-}
-
 function addFiles(tree: Tree, options: NormalizedSchema) {
   const templateOptions = {
     ...options,
@@ -79,7 +63,7 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
 
   generateFiles(
     tree,
-    path.join(__dirname, 'files'),
+    joinPathFragments(__dirname, 'files'),
     options.folderRoot,
     templateOptions
   );
@@ -94,23 +78,25 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
     const { className } = names(options.prismaModel);
     const controllerName = `${className}Controller`;
     const repoName = `${className}Repo`;
-
-    addControllerToModule(tree, appModulePath, controllerName);
-    addProviderToModule(tree, appModulePath, repoName);
-
     const infraImportPath = getTsPath(tree, options.project);
-    const appModuleFile = new SourceFileHelper(tree, appModulePath);
 
-    appModuleFile.insertfImport(controllerName, infraImportPath);
-    appModuleFile.insertfImport(repoName, infraImportPath);
+    addControllerToModule(tree, appModulePath, controllerName, infraImportPath);
+    addProviderToModule(tree, appModulePath, repoName, infraImportPath);
   }
 }
 
 export default async function (tree: Tree, options: ControllerGeneratorSchema) {
-  const normalizedOptions = normalizeOptions(tree, options);
+  const opts = normalizeOptions(tree, options);
+  const { fileName, directory, project } = opts;
 
-  addFiles(tree, normalizedOptions);
-  updateBarrel(tree, normalizedOptions);
+  addFiles(tree, opts);
+
+  updateBarrel({
+    tree,
+    projectName: project,
+    directory,
+    exports: [`${fileName}.controller`],
+  });
 
   if (!options.skipFormat) {
     await formatFiles(tree);

@@ -18,7 +18,7 @@ export default async function (
   tree: Tree,
   rawOptions: DataAccessGeneratorSchema
 ): Promise<GeneratorCallback> {
-  const options = normalizeOptions(tree, rawOptions);
+  const options = baseNormalizeOptions(tree, rawOptions);
 
   await libraryGenerator(tree, toLibraryGeneratorOptions(options));
   deleteFiles(tree, options);
@@ -38,15 +38,5 @@ export default async function (
 
   return () => {
     installPackagesTask(tree);
-  };
-}
-
-function normalizeOptions(
-  tree: Tree,
-  options: DataAccessGeneratorSchema
-): BaseLibNormalizedOptions {
-  return {
-    ...options,
-    ...baseNormalizeOptions(tree, options),
   };
 }

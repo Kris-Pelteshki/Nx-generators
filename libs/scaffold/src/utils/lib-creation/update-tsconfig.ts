@@ -1,5 +1,4 @@
-import { Tree } from '@nrwl/devkit';
-import { readProjectConfiguration, updateJson } from '@nrwl/devkit';
+import { Tree, readProjectConfiguration, updateJson } from '@nrwl/devkit';
 
 export function updateTsConfig(
   tree: Tree,

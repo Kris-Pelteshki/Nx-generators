@@ -2,18 +2,17 @@ import {
   formatFiles,
   generateFiles,
   getWorkspaceLayout,
+  joinPathFragments,
   names,
   offsetFromRoot,
   readProjectConfiguration,
   Tree,
 } from '@nrwl/devkit';
-import * as path from 'path';
 import {
-  BarrelUpdater,
-  ExportsBuilder,
   getFolderPath,
   getTsPath,
   interfaceNames,
+  updateBarrel,
 } from '../../utils';
 
 interface NormalizedSchema extends ApiClientGeneratorSchema {
@@ -48,19 +47,6 @@ function normalizeOptions(
   };
 }
 
-function updateBarrel(tree: Tree, options: NormalizedSchema) {
-  const exports = new ExportsBuilder()
-    .directory(options.directory)
-    .fileNames([`${options.fileName}.client`]);
-
-  new BarrelUpdater({
-    tree,
-    indexPath: `${options.projectRoot}/src/index.ts`,
-  })
-    .add(exports.build())
-    .update();
-}
-
 function addFiles(tree: Tree, options: NormalizedSchema) {
   const templateOptions = {
     ...options,
@@ -80,17 +66,24 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
 
   generateFiles(
     tree,
-    path.join(__dirname, filePath),
+    joinPathFragments(__dirname, filePath),
     options.folderRoot,
     templateOptions
   );
 }
 
 export default async function (tree: Tree, options: ApiClientGeneratorSchema) {
-  const normalizedOptions = normalizeOptions(tree, options);
+  const opts = normalizeOptions(tree, options);
+  const { fileName, directory, projectName } = opts;
 
-  addFiles(tree, normalizedOptions);
-  updateBarrel(tree, normalizedOptions);
+  addFiles(tree, opts);
+
+  updateBarrel({
+    tree,
+    projectName,
+    directory,
+    exports: [`${fileName}.client`],
+  });
 
   if (!options.skipFormat) {
     await formatFiles(tree);

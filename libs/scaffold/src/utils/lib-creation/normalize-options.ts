@@ -20,6 +20,7 @@ export function baseNormalizeOptions<IOptions extends BaseGenerateLibSchema>(
     : [];
 
   return {
+    ...options,
     name,
     linter: options.linter ?? Linter.EsLint,
     parsedTags,

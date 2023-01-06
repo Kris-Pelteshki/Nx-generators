@@ -1,4 +1,4 @@
-export interface ControllerGeneratorSchema {
+declare interface ControllerGeneratorSchema {
   prismaModel: string;
   project: string;
   directory?: string;

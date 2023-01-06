@@ -2,7 +2,7 @@ import { getExportStatement } from './paths';
 
 export class ExportsBuilder {
   private _fileNames: string[] = [];
-  private _dir: string;
+  private _dir?: string;
   private _pathPrefix: string;
 
   /**
@@ -15,7 +15,7 @@ export class ExportsBuilder {
     return this;
   }
 
-  directory(dir: string) {
+  directory(dir?: string) {
     this._dir = dir;
     return this;
   }

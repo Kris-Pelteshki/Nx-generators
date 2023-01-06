@@ -7,11 +7,16 @@ import {
   PROVIDERS_ARRAY_IN_MODULE_DECORATOR,
 } from './selectors';
 
-type AddStatementFn = (tree: Tree, filePath: string, statement: string) => void;
+type AddStatementFn = (
+  tree: Tree,
+  filePath: string,
+  statement: string,
+  importPath: string
+) => void;
 type AddToModuleDecoratorFn = (selector: string) => AddStatementFn;
 
 export const addToModuleDecorator: AddToModuleDecoratorFn =
-  (selector) => (tree, filePath, contentToInsert) => {
+  (selector) => (tree, filePath, contentToInsert, importPath) => {
     const sourceFileHelper = new SourceFileHelper(tree, filePath);
     const [node] = sourceFileHelper.query(selector);
 
@@ -30,7 +35,9 @@ export const addToModuleDecorator: AddToModuleDecoratorFn =
     const position = node.end - 1;
     const content = hasItems ? `, ${contentToInsert}` : contentToInsert;
 
-    sourceFileHelper.insertChange(position, content);
+    sourceFileHelper
+      .insertChange(position, content)
+      .insertImport(contentToInsert, importPath);
   };
 
 export const addControllerToModule = addToModuleDecorator(

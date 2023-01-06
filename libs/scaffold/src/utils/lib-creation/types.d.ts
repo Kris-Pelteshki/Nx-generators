@@ -1,12 +1,3 @@
-declare type IAddProjectOptions = Pick<
-  BaseLibNormalizedOptions,
-  | 'projectName'
-  | 'projectDirectory'
-  | 'projectRoot'
-  | 'publishable'
-  | 'buildable'
->;
-
 declare type IExportFileOptions = Pick<
   BaseLibNormalizedOptions,
   'projectRoot' | 'projectName'

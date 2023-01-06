@@ -19,7 +19,7 @@ export default async function (
   tree: Tree,
   rawOptions: InfraLibraryGeneratorOptions
 ): Promise<GeneratorCallback> {
-  const options = normalizeOptions(tree, rawOptions);
+  const options = baseNormalizeOptions(tree, rawOptions);
 
   await libraryGenerator(tree, toLibraryGeneratorOptions(options));
   deleteFiles(tree, options);
@@ -47,15 +47,5 @@ export default async function (
 
   return () => {
     installPackagesTask(tree);
-  };
-}
-
-function normalizeOptions(
-  tree: Tree,
-  options: InfraLibraryGeneratorOptions
-): InfraNormalizedOptions {
-  return {
-    ...options,
-    ...baseNormalizeOptions(tree, options),
   };
 }

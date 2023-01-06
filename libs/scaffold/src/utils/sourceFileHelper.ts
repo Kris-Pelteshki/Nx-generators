@@ -75,7 +75,7 @@ export class SourceFileHelper {
     return this;
   }
 
-  public insertfImport(
+  public insertImport(
     symbolName: string,
     fileName: string,
     isDefault?: boolean
