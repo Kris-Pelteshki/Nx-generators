@@ -14,6 +14,7 @@ import {
   updateTsConfig,
 } from '../../utils/lib-creation';
 import repositoryGenerator from '../repository/generator';
+import controllerGenerator from '../controller/generator';
 
 export default async function (
   tree: Tree,
@@ -25,7 +26,14 @@ export default async function (
   deleteFiles(tree, options);
 
   // create repo files
-  repositoryGenerator(tree, {
+  await repositoryGenerator(tree, {
+    ...rawOptions,
+    project: options.projectName,
+    directory: '',
+    skipFormat: true,
+  });
+
+  await controllerGenerator(tree, {
     ...rawOptions,
     project: options.projectName,
     directory: '',

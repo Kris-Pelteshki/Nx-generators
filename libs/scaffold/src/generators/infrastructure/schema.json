@@ -44,6 +44,14 @@
       "alias": "p",
       "x-prompt": "From which domain project to import interfaces from?"
     },
+    "nestApplication": {
+      "type": "string",
+      "description": "The nest application.",
+      "$default": {
+        "$source": "projectName"
+      },
+      "x-prompt": "Which Nest application to use?"
+    },
     "idType": {
       "type": "string",
       "description": "The type of the id field.",
@@ -131,5 +139,5 @@
     }
   },
   "additionalProperties": false,
-  "required": ["name", "prismaModel", "domainProject"]
+  "required": ["name", "prismaModel", "domainProject", "nestApplication"]
 }
