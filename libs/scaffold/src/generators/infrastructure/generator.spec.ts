@@ -2,13 +2,16 @@ import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { Tree, readProjectConfiguration } from '@nrwl/devkit';
 
 import generator from './generator';
-import { LibraryGeneratorOptions } from './schema';
 
 describe('scaffold generator', () => {
   let appTree: Tree;
-  const options: LibraryGeneratorOptions = {
-    name: 'test',
+  const options: InfraLibraryGeneratorOptions = {
+    name: 'infrastructure',
     prismaModel: 'User',
+    domainProject: 'todo-domain',
+    nestApplication: 'api',
+    idType: 'number',
+    directory: 'dir',
   };
 
   beforeEach(() => {
@@ -17,7 +20,7 @@ describe('scaffold generator', () => {
 
   it('should run successfully', async () => {
     await generator(appTree, options);
-    const config = readProjectConfiguration(appTree, 'test');
+    const config = readProjectConfiguration(appTree, 'infrastructure');
     expect(config).toBeDefined();
   });
 });

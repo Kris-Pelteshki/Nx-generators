@@ -6,11 +6,12 @@ import generator from './generator';
 describe('data-access generator', () => {
   let appTree: Tree;
   const options: DataAccessGeneratorSchema = {
-    name: 'data-acess',
+    name: 'test',
     directory: 'test',
     domainProject: 'todo-domain',
     prismaModel: 'Todo',
     clientType: 'axios',
+    idType: 'number',
   };
 
   beforeEach(() => {
@@ -19,7 +20,7 @@ describe('data-access generator', () => {
 
   it('should run successfully', async () => {
     await generator(appTree, options);
-    const config = readProjectConfiguration(appTree, 'data-access');
+    const config = readProjectConfiguration(appTree, 'test');
     expect(config).toBeDefined();
   });
 });

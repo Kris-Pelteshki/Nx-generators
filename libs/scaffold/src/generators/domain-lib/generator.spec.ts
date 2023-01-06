@@ -11,6 +11,7 @@ describe('domain-lib generator', () => {
     directory: 'test',
     addRepoInterface: true,
     addApiInterface: true,
+    idType: 'number',
   };
 
   beforeEach(() => {
@@ -19,7 +20,7 @@ describe('domain-lib generator', () => {
 
   it('should run successfully', async () => {
     await generator(appTree, options);
-    const config = readProjectConfiguration(appTree, 'test');
+    const config = readProjectConfiguration(appTree, 'domain');
     expect(config).toBeDefined();
   });
 });
