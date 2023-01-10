@@ -23,6 +23,7 @@ export function Index() {
           title,
           userId: '4f6b6cf2-591b-4477-a58b-17adfdc01c83',
         });
+
         setTodos((prev) => [...prev, res.data]);
       } catch (error) {
         console.error(error);

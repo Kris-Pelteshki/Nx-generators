@@ -9,8 +9,8 @@ export interface TodosProps {
 export function Todos({ todos }: TodosProps) {
   return (
     <div className={styles['container']}>
-      {todos.map((todo) => (
-        <TodoUi todo={todo} key={todo.id} />
+      {todos.map((todo, i) => (
+        <TodoUi todo={todo} key={todo.id} index={i} />
       ))}
     </div>
   );

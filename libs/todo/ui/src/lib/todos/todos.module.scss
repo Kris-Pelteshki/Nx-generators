@@ -5,4 +5,26 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(30ch, 1fr));
   gap: var(--size-2);
+
+  & > * {
+    opacity: 0;
+    transform: translateY(1em);
+
+    animation-name: fadeIn;
+    animation-duration: 400ms;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+    animation-delay: var(--fade-delay);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(1em);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
