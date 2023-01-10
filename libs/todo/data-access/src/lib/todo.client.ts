@@ -29,7 +29,7 @@ export class TodoClient implements AxiosApiClient<ITodoApi> {
   }
 
   create(data: ICreateTodoDto): AxiosPromise<ITodo> {
-    return instance.post(``, data);
+    return instance.post('', data);
   }
 
   update(data: IUpdateTodoDto): AxiosPromise<ITodo> {

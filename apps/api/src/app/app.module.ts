@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { PrismaService } from '@nx-repo/prisma';
-import { TodoRepo, TodoController } from '@nx-repo/todo/infrastructure';
 import { UserController, UserRepo } from '@nx-repo/users/infrastructure';
+import { TodoController, TodoRepo } from '@nx-repo/todo/infrastructure';
 
 @Module({
-  controllers: [TodoController, UserController],
-  providers: [PrismaService, TodoRepo, UserRepo],
+  controllers: [UserController, TodoController],
+  providers: [PrismaService, UserRepo, TodoRepo],
 })
 export class AppModule {}
