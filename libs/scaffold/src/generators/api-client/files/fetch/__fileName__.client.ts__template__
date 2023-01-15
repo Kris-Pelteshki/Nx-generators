@@ -5,7 +5,7 @@ import { <%= interfaceName %>, <%= createInterface %>, <%= updateInterface %>, <
 // TODO: Update the baseURL for the API
 // =================================================
 
-const baseURL = 'http://localhost:3333/api/<%= fileName %>s';
+const baseURL = 'http://localhost:3333/api/<%= apiRoute %>';
 
 export class <%= className %>Client implements <%= apiInterface %> {
   async getOne(id: <%= idType %>): Promise<<%= interfaceName %>> {

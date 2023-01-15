@@ -11,8 +11,6 @@
   "dependencies": {
     "@emotion/react": "11.10.5",
     "@emotion/styled": "11.10.5",
-    "@mui/icons-material": "^5.8.4",
-    "@mui/material": "^5.8.7",
     "@nestjs/common": "9.0.0",
     "@nestjs/core": "9.0.0",
     "@nestjs/mapped-types": "^1.2.0",
@@ -110,4 +108,3 @@
     "webpack-merge": "^5.8.0"
   }
 }
-

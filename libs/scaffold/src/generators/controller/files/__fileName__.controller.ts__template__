@@ -12,7 +12,7 @@ import { BaseQueryParams, ReturnMany } from '@<%= npmScope %>/utils/domain';
 import { <%= interfaceName %>, <%= createDto %>, <%= updateDto %>, <%= apiInterface %> } from '<%= domainImportPath %>';
 import { <%= repoName %> } from '<%= repoImportPath %>';
 
-@Controller('<%= fileName %>s')
+@Controller('<%= apiRoute %>')
 export class <%= className %>Controller implements <%= apiInterface %> {
   constructor(private readonly <%= repoPropertyName %>: <%= repoName %>) {}
 

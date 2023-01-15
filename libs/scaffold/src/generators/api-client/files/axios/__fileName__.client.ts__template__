@@ -7,7 +7,7 @@ import { <%= interfaceName %>, <%= createInterface %>, <%= updateInterface %>, <
 // =================================================
 
 const instance = axios.create({
-  baseURL: 'http://localhost:3333/api/<%= fileName %>s',
+  baseURL: 'http://localhost:3333/api/<%= apiRoute %>',
 });
 
 export class <%= className %>Client implements AxiosApiClient<<%= apiInterface %>> {
