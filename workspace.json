@@ -6,7 +6,6 @@
     "prisma": "libs/prisma",
     "scaffold": "libs/scaffold",
     "scaffold-e2e": "apps/scaffold-e2e",
-    "templates": "libs/templates",
     "todo-data-access": "libs/todo/data-access",
     "todo-domain": "libs/todo/domain",
     "todo-infrastructure": "libs/todo/infrastructure",

@@ -17,7 +17,6 @@
     "paths": {
       "@nx-repo/prisma": ["libs/prisma/src/index.ts"],
       "@nx-repo/scaffold": ["libs/scaffold/src/index.ts"],
-      "@nx-repo/templates": ["libs/templates/src/index.ts"],
       "@nx-repo/todo/data-access": ["libs/todo/data-access/src/index.ts"],
       "@nx-repo/todo/domain": ["libs/todo/domain/src/index.ts"],
       "@nx-repo/todo/infrastructure": ["libs/todo/infrastructure/src/index.ts"],
