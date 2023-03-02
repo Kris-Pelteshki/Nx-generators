@@ -8,7 +8,6 @@ describe('domain-lib generator', () => {
   const options: DomainLibGeneratorSchema = {
     name: 'domain',
     prismaModel: 'Todo',
-    directory: 'test',
     addRepoInterface: true,
     addApiInterface: true,
     idType: 'number',
@@ -20,7 +19,15 @@ describe('domain-lib generator', () => {
 
   it('should run successfully', async () => {
     await generator(appTree, options);
+
     const config = readProjectConfiguration(appTree, 'domain');
+    expect(config).toBeDefined();
+  });
+
+  it('should run successfully with --directory', async () => {
+    await generator(appTree, { ...options, directory: 'dir' });
+
+    const config = readProjectConfiguration(appTree, 'dir-domain');
     expect(config).toBeDefined();
   });
 });
