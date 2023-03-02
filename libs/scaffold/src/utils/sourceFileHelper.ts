@@ -2,6 +2,7 @@ import { tsquery } from '@phenomnomnominal/tsquery';
 import ts = require('typescript');
 import { Tree } from '@nrwl/devkit';
 import {
+  addGlobal,
   insertChange,
   insertImport,
   removeChange,
@@ -12,10 +13,6 @@ export class SourceFileHelper {
   private _sourceFile: ts.SourceFile;
 
   constructor(private readonly tree: Tree, private readonly filePath: string) {
-    this._createSourceFile();
-  }
-
-  private _createSourceFile() {
     const content = this.tree.read(this.filePath, 'utf-8');
 
     this._sourceFile = ts.createSourceFile(
@@ -88,6 +85,12 @@ export class SourceFileHelper {
       fileName,
       isDefault
     );
+
+    return this;
+  }
+
+  public addGlobal(content: string) {
+    addGlobal(this.tree, this._sourceFile, this.filePath, content);
 
     return this;
   }

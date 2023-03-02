@@ -1,23 +1,19 @@
 import {
   formatFiles,
-  generateFiles,
   getWorkspaceLayout,
   joinPathFragments,
   names,
-  offsetFromRoot,
   readProjectConfiguration,
   Tree,
 } from '@nrwl/devkit';
 import {
   interfaceNames,
-  updateBarrel,
   getTsPath,
   getFolderPath,
+  generateTemplateFiles,
 } from '../../utils';
 
 interface NormalizedSchema extends RepositoryGeneratorSchema {
-  projectRoot: string;
-  sourceRoot: string;
   folderRoot: string;
   npmScope: string;
   fileName: string;
@@ -30,10 +26,7 @@ function normalizeOptions(
   options: RepositoryGeneratorSchema
 ): NormalizedSchema {
   const { npmScope } = getWorkspaceLayout(tree);
-  const { sourceRoot, root: projectRoot } = readProjectConfiguration(
-    tree,
-    options.project
-  );
+  const { sourceRoot } = readProjectConfiguration(tree, options.project);
   const domainImportPath = getTsPath(tree, options.domainProject);
   const folderRoot = getFolderPath(sourceRoot, options.directory);
 
@@ -43,8 +36,6 @@ function normalizeOptions(
   return {
     ...options,
     npmScope: npmScope,
-    projectRoot,
-    sourceRoot,
     folderRoot,
     fileName,
     prismaClientProperty,
@@ -52,41 +43,38 @@ function normalizeOptions(
   };
 }
 
-function addFiles(tree: Tree, options: NormalizedSchema) {
-  const { folderRoot, fileName } = options;
+export default async function (
+  tree: Tree,
+  rawOptions: RepositoryGeneratorSchema
+) {
+  const options = normalizeOptions(tree, rawOptions);
+  const { project, directory } = options;
 
   const templateOptions = {
     ...options,
     ...names(options.prismaModel),
     ...interfaceNames(options.prismaModel),
-    offsetFromRoot: offsetFromRoot(options.projectRoot),
     tmpl: '',
   };
 
-  generateFiles(
+  generateTemplateFiles({
     tree,
-    joinPathFragments(__dirname, 'files'),
-    folderRoot,
-    templateOptions
-  );
-
-  if (options.unitTestRunner === 'none') {
-    tree.delete(joinPathFragments(folderRoot, `${fileName}.repo.spec.ts`));
-  }
-}
-
-export default async function (tree: Tree, options: RepositoryGeneratorSchema) {
-  const opts = normalizeOptions(tree, options);
-  const { project, directory } = opts;
-
-  addFiles(tree, opts);
-
-  updateBarrel({
-    tree,
+    templateOptions,
     projectName: project,
     directory,
-    exports: [`${opts.fileName}.repo`],
+    files: [
+      {
+        path: joinPathFragments(__dirname, 'files'),
+        exports: [`${options.fileName}.repo`],
+      },
+    ],
   });
+
+  if (options.unitTestRunner === 'none') {
+    tree.delete(
+      joinPathFragments(options.folderRoot, `${options.fileName}.repo.spec.ts`)
+    );
+  }
 
   if (!options.skipFormat) {
     await formatFiles(tree);

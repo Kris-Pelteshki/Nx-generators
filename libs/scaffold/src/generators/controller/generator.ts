@@ -1,6 +1,5 @@
 import {
   formatFiles,
-  generateFiles,
   getWorkspaceLayout,
   joinPathFragments,
   names,
@@ -8,21 +7,17 @@ import {
   Tree,
 } from '@nrwl/devkit';
 import {
+  generateTemplateFiles,
   getFilePath,
-  getFolderPath,
   getTsPath,
   interfaceNames,
-  updateBarrel,
 } from '../../utils';
 import { addControllerToModule, addProviderToModule } from '../../utils/nest';
 
 interface NormalizedSchema extends ControllerGeneratorSchema {
   npmScope: string;
-  projectRoot: string;
   domainImportPath: string;
   repoImportPath: string;
-  sourceRoot: string;
-  folderRoot: string;
   fileName: string;
 }
 
@@ -31,43 +26,18 @@ function normalizeOptions(
   options: ControllerGeneratorSchema
 ): NormalizedSchema {
   const { npmScope } = getWorkspaceLayout(tree);
-  const { sourceRoot, root: projectRoot } = readProjectConfiguration(
-    tree,
-    options.project
-  );
-
   const fileName = names(options.prismaModel).fileName;
-  const domainImportPath = getTsPath(tree, options.domainProject);
-  const folderRoot = getFolderPath(sourceRoot, options.directory, '/lib');
-  const repoImportPath = `./${fileName}.repo`;
 
   return {
     ...options,
-    npmScope: npmScope,
-    projectRoot,
-    domainImportPath,
-    repoImportPath,
-    sourceRoot,
-    folderRoot,
+    npmScope,
     fileName,
+    domainImportPath: getTsPath(tree, options.domainProject),
+    repoImportPath: `./${fileName}.repo`,
   };
 }
 
-function addFiles(tree: Tree, options: NormalizedSchema) {
-  const templateOptions = {
-    ...options,
-    ...names(options.prismaModel),
-    ...interfaceNames(options.prismaModel),
-    template: '',
-  };
-
-  generateFiles(
-    tree,
-    joinPathFragments(__dirname, 'files'),
-    options.folderRoot,
-    templateOptions
-  );
-
+function updateNestModule(tree: Tree, options: NormalizedSchema) {
   const { sourceRoot: nestRoot } = readProjectConfiguration(
     tree,
     options.nestApplication
@@ -85,18 +55,34 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
   }
 }
 
-export default async function (tree: Tree, options: ControllerGeneratorSchema) {
-  const opts = normalizeOptions(tree, options);
-  const { fileName, directory, project } = opts;
+export default async function (
+  tree: Tree,
+  rawOptions: ControllerGeneratorSchema
+) {
+  const options = normalizeOptions(tree, rawOptions);
+  const { fileName, directory, project } = options;
 
-  addFiles(tree, opts);
+  const templateOptions = {
+    ...options,
+    ...names(options.prismaModel),
+    ...interfaceNames(options.prismaModel),
+    template: '',
+  };
 
-  updateBarrel({
+  generateTemplateFiles({
     tree,
+    templateOptions,
     projectName: project,
     directory,
-    exports: [`${fileName}.controller`],
+    files: [
+      {
+        path: joinPathFragments(__dirname, 'files'),
+        exports: [`${fileName}.controller`],
+      },
+    ],
   });
+
+  updateNestModule(tree, options);
 
   if (!options.skipFormat) {
     await formatFiles(tree);

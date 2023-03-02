@@ -1,5 +1,10 @@
 import { Tree, readProjectConfiguration, updateJson } from '@nrwl/devkit';
 
+type IUpdateTsConfigOptions = Pick<
+  BaseLibNormalizedOptions,
+  'projectName' | 'target' | 'strict'
+>;
+
 export function updateTsConfig(
   tree: Tree,
   options: IUpdateTsConfigOptions

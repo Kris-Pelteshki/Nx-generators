@@ -3,21 +3,11 @@ import {
   getWorkspaceLayout,
   joinPathFragments,
   names,
-  offsetFromRoot,
-  readProjectConfiguration,
   Tree,
 } from '@nrwl/devkit';
-import {
-  GenerateFilesHelper,
-  getFolderPath,
-  interfaceNames,
-  updateBarrel,
-} from '../../utils';
+import { generateTemplateFiles, interfaceNames } from '../../utils';
 
 interface NormalizedSchema extends DomainGeneratorSchema {
-  projectRoot: string;
-  sourceRoot: string;
-  folderRoot: string;
   npmScope: string;
   fileName: string;
   prismaClientProperty: string;
@@ -28,11 +18,6 @@ function normalizeOptions(
   options: DomainGeneratorSchema
 ): NormalizedSchema {
   const { npmScope } = getWorkspaceLayout(tree);
-  const { sourceRoot, root: projectRoot } = readProjectConfiguration(
-    tree,
-    options.projectName
-  );
-  const folderRoot = getFolderPath(sourceRoot, options.directory);
 
   const prismaClientProperty = names(options.prismaModel).propertyName;
   const fileName = names(options.prismaModel).propertyName;
@@ -40,61 +25,43 @@ function normalizeOptions(
   return {
     ...options,
     npmScope,
-    projectRoot,
-    sourceRoot,
-    folderRoot,
     fileName,
     prismaClientProperty,
   };
-}
-
-function addFiles(tree: Tree, options: NormalizedSchema) {
-  const templateOptions = {
-    ...options,
-    ...names(options.prismaModel),
-    ...interfaceNames(options.prismaModel),
-    offsetFromRoot: offsetFromRoot(options.projectRoot),
-    template: '',
-  };
-
-  const getPath = (filePath: string) => joinPathFragments(__dirname, filePath);
-
-  new GenerateFilesHelper({
-    tree,
-    templateOptions,
-    dirToPlaceFiles: options.folderRoot,
-  })
-    .add(getPath('files/common'))
-    .add({
-      folder: getPath('files/repo'),
-      condition: options.addRepoInterface,
-    })
-    .add({
-      folder: getPath('files/api'),
-      condition: options.addApiInterface,
-    })
-    .generate();
 }
 
 export default async function (tree: Tree, options: DomainGeneratorSchema) {
   const opts = normalizeOptions(tree, options);
   const { fileName, projectName, directory } = opts;
 
-  addFiles(tree, opts);
+  const templateOptions = {
+    ...opts,
+    ...names(options.prismaModel),
+    ...interfaceNames(options.prismaModel),
+    template: '',
+  };
 
-  updateBarrel({
+  const getPath = (filePath: string) => joinPathFragments(__dirname, filePath);
+
+  generateTemplateFiles({
     tree,
+    templateOptions,
     projectName,
     directory,
-    exports: [
-      `${fileName}.models`,
+    files: [
       {
-        condition: opts.addRepoInterface,
-        import: `${fileName}.repo`,
+        path: getPath('files/common'),
+        exports: [`${fileName}.models`],
       },
       {
-        condition: opts.addApiInterface,
-        import: `${fileName}.api`,
+        path: getPath('files/repo'),
+        addOnlyIf: opts.addRepoInterface,
+        exports: [`${fileName}.repo`],
+      },
+      {
+        path: getPath('files/api'),
+        addOnlyIf: opts.addApiInterface,
+        exports: [`${fileName}.api`],
       },
     ],
   });

@@ -25,13 +25,8 @@ export class ExportsBuilder {
     return this;
   }
 
-  addFile(name: string) {
-    this._fileNames.push(name);
-    return this;
-  }
-
-  removeFile(name: string) {
-    this._fileNames = this._fileNames.filter((fileName) => name !== fileName);
+  addFile(...names: string[]) {
+    this._fileNames.push(...names);
     return this;
   }
 

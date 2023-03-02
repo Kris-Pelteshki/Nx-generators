@@ -1,16 +1,8 @@
-import {
-  GeneratorCallback,
-  installPackagesTask,
-  Tree,
-  formatFiles,
-} from '@nrwl/devkit';
-import { libraryGenerator } from '@nrwl/workspace/generators';
+import { GeneratorCallback, Tree } from '@nrwl/devkit';
 
 import {
   baseNormalizeOptions,
-  deleteFiles,
-  toLibraryGeneratorOptions,
-  updateTsConfig,
+  enhancedLibraryGenerator,
 } from '../../utils/lib-creation';
 import apiClientGenerator from '../api-client/generator';
 
@@ -20,23 +12,16 @@ export default async function (
 ): Promise<GeneratorCallback> {
   const options = baseNormalizeOptions(tree, rawOptions);
 
-  await libraryGenerator(tree, toLibraryGeneratorOptions(options));
-  deleteFiles(tree, options);
-
-  apiClientGenerator(tree, {
-    ...rawOptions,
-    projectName: options.projectName,
-    directory: '',
-    skipFormat: true,
+  return enhancedLibraryGenerator({
+    tree,
+    rawOptions,
+    generators: () => [
+      apiClientGenerator(tree, {
+        ...rawOptions,
+        projectName: options.projectName,
+        directory: '',
+        skipFormat: true,
+      }),
+    ],
   });
-
-  updateTsConfig(tree, options);
-
-  if (!options.skipFormat) {
-    await formatFiles(tree);
-  }
-
-  return () => {
-    installPackagesTask(tree);
-  };
 }
