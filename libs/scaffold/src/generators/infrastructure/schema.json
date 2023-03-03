@@ -56,7 +56,7 @@
       "type": "string",
       "description": "The type of the id field.",
       "enum": ["number", "string"],
-      "default": "number"
+      "default": "string"
     },
     "linter": {
       "description": "The tool to use for running lint checks.",

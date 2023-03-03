@@ -46,8 +46,8 @@
     "idType": {
       "type": "string",
       "description": "The type of the id field.",
-      "default": "number",
-      "enum": ["number", "string"]
+      "enum": ["number", "string"],
+      "default": "string"
     },
     "skipFormat": {
       "type": "boolean",
