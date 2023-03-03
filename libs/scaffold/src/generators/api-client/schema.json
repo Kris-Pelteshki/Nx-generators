@@ -28,7 +28,6 @@
       "$default": {
         "$source": "projectName"
       },
-      "alias": "p",
       "x-prompt": "From which domain project to import interfaces from?"
     },
     "directory": {
@@ -55,5 +54,11 @@
     }
   },
   "additionalProperties": false,
-  "required": ["prismaModel", "projectName", "domainProject", "clientType"]
+  "required": [
+    "prismaModel",
+    "projectName",
+    "domainProject",
+    "clientType",
+    "idType"
+  ]
 }

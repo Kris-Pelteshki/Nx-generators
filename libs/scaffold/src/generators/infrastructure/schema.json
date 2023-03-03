@@ -46,7 +46,7 @@
     },
     "nestApplication": {
       "type": "string",
-      "description": "The nest application.",
+      "description": "The nest application (e.g. apps/api).",
       "$default": {
         "$source": "projectName"
       },
@@ -139,5 +139,11 @@
     }
   },
   "additionalProperties": false,
-  "required": ["name", "prismaModel", "domainProject", "nestApplication"]
+  "required": [
+    "name",
+    "prismaModel",
+    "domainProject",
+    "nestApplication",
+    "idType"
+  ]
 }

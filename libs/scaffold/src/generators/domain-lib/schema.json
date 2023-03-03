@@ -113,5 +113,5 @@
     }
   },
   "additionalProperties": false,
-  "required": ["name", "prismaModel"]
+  "required": ["name", "prismaModel", "idType"]
 }
