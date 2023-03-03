@@ -4,7 +4,7 @@ import {
   baseNormalizeOptions,
   enhancedLibraryGenerator,
 } from '../../utils/lib-creation';
-import domainGenerator from '../domain/generator';
+import domainEntityGenerator from '../domain-entity/generator';
 
 export default async function (
   tree: Tree,
@@ -16,7 +16,7 @@ export default async function (
     tree,
     rawOptions,
     generators: () => [
-      domainGenerator(tree, {
+      domainEntityGenerator(tree, {
         ...rawOptions,
         projectName: options.projectName,
         directory: '',

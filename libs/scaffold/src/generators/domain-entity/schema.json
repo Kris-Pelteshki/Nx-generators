@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
-  "$id": "Domain-files",
-  "title": "",
+  "$id": "Domain-entity",
+  "title": "Creates an entity model, repo and api interfaces",
   "type": "object",
   "properties": {
     "prismaModel": {

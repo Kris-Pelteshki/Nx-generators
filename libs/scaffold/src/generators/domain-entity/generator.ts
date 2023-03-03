@@ -7,7 +7,7 @@ import {
 } from '@nrwl/devkit';
 import { generateTemplateFiles, interfaceNames } from '../../utils';
 
-interface NormalizedSchema extends DomainGeneratorSchema {
+interface NormalizedSchema extends DomainEntityGeneratorSchema {
   npmScope: string;
   fileName: string;
   prismaClientProperty: string;
@@ -15,7 +15,7 @@ interface NormalizedSchema extends DomainGeneratorSchema {
 
 function normalizeOptions(
   tree: Tree,
-  options: DomainGeneratorSchema
+  options: DomainEntityGeneratorSchema
 ): NormalizedSchema {
   const { npmScope } = getWorkspaceLayout(tree);
 
@@ -30,7 +30,10 @@ function normalizeOptions(
   };
 }
 
-export default async function (tree: Tree, options: DomainGeneratorSchema) {
+export default async function (
+  tree: Tree,
+  options: DomainEntityGeneratorSchema
+) {
   const opts = normalizeOptions(tree, options);
   const { fileName, projectName, directory } = opts;
 

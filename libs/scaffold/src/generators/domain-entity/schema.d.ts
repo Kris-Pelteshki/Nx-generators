@@ -1,4 +1,4 @@
-interface DomainGeneratorSchema {
+interface DomainEntityGeneratorSchema {
   prismaModel: string;
   projectName: string;
   directory?: string;

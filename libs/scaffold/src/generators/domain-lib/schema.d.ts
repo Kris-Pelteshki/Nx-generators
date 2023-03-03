@@ -1,5 +1,5 @@
 interface DomainLibGeneratorSchema
   extends BaseGenerateLibSchema,
-    Omit<DomainGeneratorSchema, 'projectName' | 'skipFormat'> {}
+    Omit<DomainEntityGeneratorSchema, 'projectName' | 'skipFormat'> {}
 
 interface DomainNormalizedOptions extends BaseLibNormalizedOptions {}

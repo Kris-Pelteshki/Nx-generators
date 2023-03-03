@@ -23,10 +23,10 @@
       "schema": "./src/generators/repository/schema.json",
       "description": "Creates a repository using the prisma client"
     },
-    "domain": {
-      "factory": "./src/generators/domain/generator",
-      "schema": "./src/generators/domain/schema.json",
-      "description": "Creates files in an already existing domain library"
+    "domain-entity": {
+      "factory": "./src/generators/domain-entity/generator",
+      "schema": "./src/generators/domain-entity/schema.json",
+      "description": "Creates model, repo and api interfaces"
     },
     "domain-lib": {
       "factory": "./src/generators/domain-lib/generator",
