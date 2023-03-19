@@ -1,4 +1,4 @@
-import { GeneratorCallback, Tree } from '@nrwl/devkit';
+import { Tree } from '@nrwl/devkit';
 
 import {
   baseNormalizeOptions,
@@ -10,7 +10,7 @@ import controllerGenerator from '../controller/generator';
 export default async function (
   tree: Tree,
   rawOptions: InfraLibraryGeneratorOptions
-): Promise<GeneratorCallback> {
+) {
   const options = baseNormalizeOptions(tree, rawOptions);
 
   return enhancedLibraryGenerator({

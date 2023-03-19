@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "Domain",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the directory in the libs folder",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What domain would you like to create?"
+    },
+    "prismaModel": {
+      "type": "string",
+      "description": "The name of the prisma model in the schema.prisma file.",
+      "$default": {
+        "$source": "argv",
+        "index": 1
+      }
+    },
+    "idType": {
+      "type": "string",
+      "description": "The type of the id field.",
+      "enum": ["number", "string"],
+      "default": "string"
+    },
+    "clientType": {
+      "description": "What do you want to use for making requests?",
+      "type": "string",
+      "enum": ["axios", "fetch"],
+      "default": "axios"
+    },
+    "nestApplication": {
+      "type": "string",
+      "description": "The nest application (e.g. apps/api)",
+      "$default": {
+        "$source": "projectName"
+      },
+      "x-prompt": "Which Nest application to use?"
+    }
+  },
+  "required": ["name", "prismaModel", "nestApplication", "idType", "clientType"]
+}

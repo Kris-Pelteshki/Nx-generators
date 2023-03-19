@@ -37,6 +37,11 @@
       "factory": "./src/generators/data-access/generator",
       "schema": "./src/generators/data-access/schema.json",
       "description": "Creates a data-access library"
+    },
+    "domain": {
+      "factory": "./src/generators/domain/generator",
+      "schema": "./src/generators/domain/schema.json",
+      "description": "Creates a new set of libraries for a domain. Example: libs/todo — todo would be the domain with multiple libraries being created inside the directory."
     }
   }
 }

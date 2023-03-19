@@ -1,4 +1,4 @@
-import { GeneratorCallback, Tree } from '@nrwl/devkit';
+import { Tree } from '@nrwl/devkit';
 
 import {
   baseNormalizeOptions,
@@ -9,7 +9,7 @@ import apiClientGenerator from '../api-client/generator';
 export default async function (
   tree: Tree,
   rawOptions: DataAccessGeneratorSchema
-): Promise<GeneratorCallback> {
+) {
   const options = baseNormalizeOptions(tree, rawOptions);
 
   return enhancedLibraryGenerator({

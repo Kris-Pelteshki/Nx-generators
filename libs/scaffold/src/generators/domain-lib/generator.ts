@@ -9,7 +9,7 @@ import domainEntityGenerator from '../domain-entity/generator';
 export default async function (
   tree: Tree,
   rawOptions: DomainLibGeneratorSchema
-): Promise<GeneratorCallback> {
+) {
   const options = baseNormalizeOptions(tree, rawOptions);
 
   return enhancedLibraryGenerator({
